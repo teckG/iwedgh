@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Label, Input } from "@/components/ui"; // Make sure these are correctly imported from Shadcn
 import { useDropzone } from "react-dropzone";
+import Image from "next/image";
 
 function ImageUploadForm() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -28,7 +29,7 @@ function ImageUploadForm() {
         <Label htmlFor="images" className="block text-sm font-medium text-gray-700">Upload Images of Service *</Label>
         <div {...getRootProps()} className="border-2 border-dashed border-gray-300 p-4 rounded-lg mt-1 cursor-pointer">
           <input id="images" {...register("images")} {...getInputProps()} className="hidden" />
-          <p className="text-gray-500">Drag 'n' drop some files here, or click to select files</p>
+          <p className="text-gray-500">Drag &apos;n&apos; drop some files here, or click to select files</p>
         </div>
         {errors.images && <p className="mt-2 text-sm text-red-600">{errors.images.message}</p>}
 
@@ -36,7 +37,7 @@ function ImageUploadForm() {
         <div className="mt-4 grid grid-cols-3 gap-4">
           {selectedImages.map((file, index) => (
             <div key={index} className="relative">
-              <img
+              <Image
                 src={URL.createObjectURL(file)}
                 alt={`Preview ${index}`}
                 className="w-full h-24 object-cover rounded-md"

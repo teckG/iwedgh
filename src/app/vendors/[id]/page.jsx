@@ -139,7 +139,6 @@ export default function VendorDetailPage({ params }) {
 
       setLoading(false);
     };
-    console.log(reviews);
     fetchReviews();
   }, [id]);
 
