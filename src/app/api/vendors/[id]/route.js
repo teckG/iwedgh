@@ -1,17 +1,17 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import {  ObjectId } from 'mongodb';
 
-const uri = process.env.MONGO_URL;
-const client = new MongoClient(uri);
+import db_connection from "../../../../../db";
+import Vendor from "../../../../../models/vendor";
+
+
 
 export async function GET(req, { params }) {
   const { id } = params;
 
   try {
-    await client.connect();
-    const db = client.db('vendors'); // Replace with your database name
-    const collection = db.collection('vendors'); // Replace with your collection name
-
-    const vendor = await collection.findOne({ _id: new ObjectId(id) });
+    
+    await db_connection();
+    const vendor = await Vendor.findOne({ _id: new ObjectId(id) });
 
     if (vendor) {
       return new Response(JSON.stringify(vendor), { status: 200 });
@@ -20,9 +20,7 @@ export async function GET(req, { params }) {
     }
   } catch (error) {
     return new Response('Internal Server Error', { status: 500 });
-  } finally {
-    await client.close();
-  }
+  } 
 }
 
 
@@ -32,11 +30,9 @@ export async function PUT(req, { params }) {
   const body = await req.json();
 
   try {
-    await client.connect();
-    const db = client.db('vendors'); // Replace with your database name
-    const collection = db.collection('vendors'); // Replace with your collection name
+    await db_connection();
 
-    const result = await collection.updateOne(
+    const result = await Vendor.updateOne(
       { _id: new ObjectId(id) },
       { $set: body }
     );
@@ -48,7 +44,5 @@ export async function PUT(req, { params }) {
     }
   } catch (error) {
     return new Response('Internal Server Error', { status: 500 });
-  } finally {
-    await client.close();
-  }
+  } 
 }

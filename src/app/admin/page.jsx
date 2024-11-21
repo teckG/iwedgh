@@ -11,15 +11,14 @@ import { useRouter } from "next/navigation";
 // Assuming these are custom components. Ensure they are correctly implemented.
 import { Table, TableBody, TableRow, TableCell } from "@/components/ui/table";
 import Link from "next/link";
-import { Protect, useAuth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 
 const AdminDashboard = () => {
   const [vendors, setVendors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [vendorsPerPage] = useState(5); // Number of vendors per page
   const [totalVendors, setTotalVendors] = useState(0);
-  const [selectedVendor, setSelectedVendor] = useState(null); // Vendor to edit
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
 
   const router = useRouter();
 
