@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -18,7 +19,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {  Delete, HeartIcon, HeartPulse } from "lucide-react";
+import { Delete, HeartIcon, HeartPulse } from "lucide-react";
 
 export default function Vendors() {
   const [vendors, setVendors] = useState([]);
@@ -27,13 +28,13 @@ export default function Vendors() {
   const [favorites, setFavorites] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const { user } = useUser();
+  const { isSignedIn } = useUser();
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { isSignedIn } = useUser(); // Get the user's sign-in status
-
+  const dropdownRef = useRef(null);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const vendorsPerPage = 10; // Limit to 8 vendors per page
+  const vendorsPerPage = 10;
 
   // Fetch vendors
   useEffect(() => {
@@ -58,20 +59,14 @@ export default function Vendors() {
       setFilteredVendors(vendors);
     } else {
       const filtered = vendors.filter(
-        (vendor) => vendor.businessCategory === selectedCategory
+        (vendor) =>
+          vendor.businessCategory.toLowerCase() === selectedCategory.toLowerCase()
       );
       setFilteredVendors(filtered);
     }
   }, [selectedCategory, vendors]);
 
-
-  const [filteredCategories, setFilteredCategories] = useState([]);
-  const dropdownRef = useRef(null);
-
-
-  // Filter categories based on the input
-  useEffect(() => {
-     // Full list of categories
+  // Dropdown categories
   const categories = [
     "Apparel",
     "Band",
@@ -94,34 +89,25 @@ export default function Vendors() {
     "Venues",
     "Photographer",
     "Videographer",
-    "Wedding Planner"
+    "Wedding Planner",
   ];
 
-    if (selectedCategory) {
-      setFilteredCategories(
-        categories.filter((category) =>
-          category.toLowerCase().includes(selectedCategory.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredCategories(categories);
-    }
-  }, [selectedCategory]);
+  const filteredCategories = selectedCategory
+    ? categories.filter((category) =>
+        category.toLowerCase().includes(selectedCategory.toLowerCase())
+      )
+    : categories;
 
- 
-
- // Handle click outside to close the dropdown
- useEffect(() => {
-  function handleClickOutside(event) {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropdownVisible(false);
+  // Handle outside click for dropdown
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
     }
-  }
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Pagination Logic
   const indexOfLastVendor = currentPage * vendorsPerPage;
@@ -131,18 +117,15 @@ export default function Vendors() {
     indexOfLastVendor
   );
 
-  // Handle Page Change
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   const nextPage = () => {
     if (currentPage < Math.ceil(filteredVendors.length / vendorsPerPage)) {
-      setCurrentPage(currentPage + 1);
+      setCurrentPage((prevPage) => prevPage + 1);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      setCurrentPage((prevPage) => prevPage - 1);
     }
   };
 
@@ -153,15 +136,10 @@ export default function Vendors() {
         try {
           const res = await fetch(`/api/favorites/get`);
           const data = await res.json();
-          // Check if favorites is an object before processing
-          if (typeof data.favorites === "object" && data.favorites !== null) {
-            const favoriteIds = Object.values(data.favorites)
-              .flat()
-              .map((fav) => fav._id);
-            setFavorites(favoriteIds);
-          } else {
-            console.error("Favorites is not a valid object:", data.favorites);
-          }
+          const favoriteIds = Object.values(data.favorites || {})
+            .flat()
+            .map((fav) => fav._id);
+          setFavorites(favoriteIds);
         } catch (error) {
           console.error("Error fetching favorites:", error);
         }
@@ -170,77 +148,31 @@ export default function Vendors() {
     }
   }, [user?.id]);
 
-  // Toggle favorite status of a vendor
   const toggleFavorite = async (vendorId) => {
-    if (!user?.id) return; // Ensure the user is logged in
-
+    if (!user?.id) return;
     try {
-      // Check if the client already exists in the database
-      const res = await fetch("/api/clients/check", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: user.primaryEmailAddress.emailAddress,
-          firstName: user.firstName,
-          lastName: user.lastName,
-        }),
-      });
-
-      const { exists } = await res.json();
-
-      if (!exists) {
-        // If the client doesn't exist, create a new client record
-        await fetch("/api/clients/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user.primaryEmailAddress.emailAddress,
-            firstName: user.firstName,
-            lastName: user.lastName,
-          }),
-        });
-      }
-
-      // Add or remove vendor from favorites
       if (favorites.includes(vendorId)) {
-        // Remove from favorites in the database
         await fetch("/api/favorites/remove", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user.primaryEmailAddress.emailAddress,
-            vendorId,
-          }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: user.primaryEmailAddress.emailAddress, vendorId }),
         });
-
-        // Update the state locally
         setFavorites(favorites.filter((id) => id !== vendorId));
       } else {
-        // Add to favorites in the database
         await fetch("/api/favorites/add", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user.primaryEmailAddress.emailAddress,
-            vendorId,
-          }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: user.primaryEmailAddress.emailAddress, vendorId }),
         });
-
-        // Update the state locally
         setFavorites([...favorites, vendorId]);
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
   };
+
+  const getInitials = (name) => name.split(" ").map((w) => w[0]).join("");
+  
 
   return (
     <div className="flex">
