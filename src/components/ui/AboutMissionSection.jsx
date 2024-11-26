@@ -9,9 +9,7 @@ export default function AboutMissionSection() {
           About us
         </h1>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
-          Once upon a time, in a far-off land, there was a very lazy king who
-          spent all day lounging on his throne. One day, his advisors came to
-          him with a problem: the kingdom was running out of money.
+        iWedGh is a platform that helps couples manage their wedding plans effortlessly. From budget planning to vendor management, we provide everything you need.
         </p>
       </div>
 

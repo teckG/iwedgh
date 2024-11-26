@@ -6,6 +6,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Link from "next/link";
+
 
 export default function FAQSection() {
   return (
@@ -40,7 +42,7 @@ export default function FAQSection() {
               <AccordionTrigger>I am vendor, how do I join the platform?</AccordionTrigger>
               <AccordionContent>
                 Kindly visit{" "}
-                <a href="#" className="link">link to sign up</a> as a vendor to join the family.
+                <Link href="https://forms.gle/Q5MNwfZbwDNQUQBX6" className="link"><u>link to sign up</u></Link> as a vendor to join the family.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

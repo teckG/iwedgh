@@ -35,11 +35,11 @@ const formSchema = z.object({
   city: z.string().nonempty("City is required"),
   region: z.string().nonempty("Region is required"),
   website: z.string().optional(),
-  instagram: z.string().url("Please enter a valid URL").optional(),
-  twitter: z.string().url("Please enter a valid URL").optional(),
-  facebook: z.string().url("Please enter a valid URL").optional(),
-  tiktok: z.string().url("Please enter a valid URL").optional(),
-  whatsapp: z.string().url("Please enter a valid URL").optional(),
+  instagram: z.string().optional(),
+  twitter: z.string().optional(),
+  facebook: z.string().optional(),
+  tiktok: z.string().optional(),
+  whatsapp: z.string().optional(),
 });
 
 export default function MultiStepForm() {
@@ -433,7 +433,7 @@ export default function MultiStepForm() {
 
         {/* Social Media Links */}
         <div className="space-y-4">
-          {['instagram', 'twitter', 'facebook', 'tiktok', 'whatsapp'].map((platform) => (
+          {['facebook', 'twitter', 'instagram', 'tiktok', 'whatsapp'].map((platform) => (
             <div key={platform}>
               <Label
                 htmlFor={platform}

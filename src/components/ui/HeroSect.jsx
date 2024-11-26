@@ -55,7 +55,7 @@ export default function Hero() {
               >
                 Get started
               </Link>
-              <Link href="#" className="text-sm font-semibold leading-6 text-green-900">
+              <Link href="/sign-in" className="text-sm font-semibold leading-6 text-green-900">
                 Login <span aria-hidden="true">→</span>
               </Link>
             </div>

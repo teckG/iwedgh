@@ -17,7 +17,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/components/ui/dialog";
 import {
   Facebook,
   Instagram,
@@ -259,41 +259,41 @@ const handleInputChange = (e) => {
                 </span>
               </CardTitle>
             </div>
-
             <div className="flex space-x-4">
-  {Object.entries(vendor.socialMediaLinks).map(([platform, link], index) => {
-    const formattedLink = formatURL(link);
+  {Object.entries(vendor.socialMediaLinks)
+    .filter(([platform, link]) => link) // Filter out empty links
+    .map(([platform, link], index) => {
+      const formattedLink = formatURL(link);
+      const iconProps = {
+        instagram: <Instagram className="w-6 h-6" />, // Icon size
+        twitter: <Twitter className="w-6 h-6" />,
+        facebook: <Facebook className="w-6 h-6" />,
+        tiktok: (
+          <Image
+            src={tiktok}
+            width={24}
+            height={24}
+            alt="tiktok logo"
+            className="w-6 h-6" // Apply consistent size
+          />
+        ),
+        whatsapp: <MessageCircle className="w-6 h-6" />,
+      };
 
-    const iconProps = {
-      instagram: <Instagram className="w-6 h-6" />,  // Icon size
-      twitter: <Twitter className="w-6 h-6" />,
-      facebook: <Facebook className="w-6 h-6" />,
-      tiktok: (
-        <Image
-          src={tiktok}
-          width={24}
-          height={24}
-          alt="tiktok logo"
-          className="w-6 h-6"  // Apply consistent size
-        />
-      ),
-      whatsapp: <MessageCircle className="w-6 h-6" />,
-    };
-
-    return (
-      <Link
-        key={index}
-        href={formattedLink}
-        className="text-gray-600 hover:text-gray-800 transition-colors"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <button className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 hover:scale-110 transition-transform duration-200">
-          {iconProps[platform] || null}
-        </button>
-      </Link>
-    );
-  })}
+      return (
+        <Link
+          key={index}
+          href={formattedLink}
+          className="text-gray-600 hover:text-gray-800 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 hover:scale-110 transition-transform duration-200">
+            {iconProps[platform]}
+          </button>
+        </Link>
+      );
+    })}
 
   <Link
     href={`tel:+233${vendor.activePhoneNumber.slice(1)}`}
@@ -302,6 +302,7 @@ const handleInputChange = (e) => {
     <PhoneCallIcon className="w-6 h-6" /> {/* Apply icon size */}
   </Link>
 </div>
+
 
           </div>
 
@@ -327,15 +328,20 @@ const handleInputChange = (e) => {
           <p>
             <span className="font-semibold">Region:</span> {vendor.region}
           </p>
-          <p>
-            <span className="font-semibold">Website:</span>
-            <Link
-              className="text-blue-600 underline ml-2"
-              href={formatURL(vendor.website)}
-            >
-              {vendor.businessName}
-            </Link>
-          </p>
+          {vendor.website && (
+  <p>
+    <span className="font-semibold">Website:</span>
+    <Link
+      className="text-blue-600 underline ml-2"
+      href={formatURL(vendor.website)}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {vendor.businessName}
+    </Link>
+  </p>
+)}
+
         </CardContent>
 
         <CardFooter className="bg-gray-50 p-4">
@@ -503,6 +509,7 @@ const handleInputChange = (e) => {
         {/* Modal for image preview */}
         <Dialog open={isModalOpen} onOpenChange={closeModal}>
           <DialogContent>
+            <DialogTitle>{vendor.businessName}</DialogTitle>
             {selectedImage && (
               <Image
                 src={selectedImage}
@@ -512,6 +519,51 @@ const handleInputChange = (e) => {
                 className="object-cover"
               />
             )}
+          <DialogFooter>
+          <div className="flex space-x-4">
+  {Object.entries(vendor.socialMediaLinks)
+    .filter(([platform, link]) => link) // Filter out empty links
+    .map(([platform, link], index) => {
+      const formattedLink = formatURL(link);
+      const iconProps = {
+        instagram: <Instagram className="w-6 h-6" />, // Icon size
+        twitter: <Twitter className="w-6 h-6" />,
+        facebook: <Facebook className="w-6 h-6" />,
+        tiktok: (
+          <Image
+            src={tiktok}
+            width={24}
+            height={24}
+            alt="tiktok logo"
+            className="w-6 h-6" // Apply consistent size
+          />
+        ),
+        whatsapp: <MessageCircle className="w-6 h-6" />,
+      };
+
+      return (
+        <Link
+          key={index}
+          href={formattedLink}
+          className="text-gray-600 hover:text-gray-800 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 hover:scale-110 transition-transform duration-200">
+            {iconProps[platform]}
+          </button>
+        </Link>
+      );
+    })}
+
+  <Link
+    href={`tel:+233${vendor.activePhoneNumber.slice(1)}`}
+    className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 hover:scale-110 transition-transform duration-200"
+  >
+    <PhoneCallIcon className="w-6 h-6" /> {/* Apply icon size */}
+  </Link>
+</div>
+          </DialogFooter>
           </DialogContent>
         </Dialog>
       </Card>

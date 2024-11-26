@@ -41,14 +41,7 @@ export default function CarouselSection() {
 
   return (
     <div className="relative flex-1 py-4 overflow-hidden">
-       <Link
-        href="/vendors"
-        className="block bg-green-600  px-6 py-3 text-center text-white font-semibold 
-        shadow-md hover:bg-yellow-500 transition-transform duration-200 transform  
-         focus:outline-none focus:ring-4 focus:ring-yellow-300 m-0"
-      >
-        Check out our vendors &rarr;
-      </Link>
+       
       <div className="relative w-full h-[500px]"> 
         <div
           className="absolute py-0 inset-0 flex transition-transform duration-500 ease-in-out "
@@ -65,7 +58,7 @@ export default function CarouselSection() {
                     src={src}
                     alt={`Image ${index}`}
                     layout="fill"
-                    className="object-cover rounded-md rounded-t-none"
+                    className="object-contain rounded-md rounded-t-none"
                   />
                 </AspectRatio>
               </div>
@@ -75,6 +68,14 @@ export default function CarouselSection() {
           )}
           
         </div>
+        {/* <Link
+        href="/vendors"
+        className="block bg-green-600  px-6 py-3 text-center text-white font-semibold 
+        shadow-md hover:bg-yellow-500 transition-transform duration-200 transform  
+         focus:outline-none focus:ring-4 focus:ring-yellow-300 m-0"
+      >
+        Check out our vendors &rarr;
+      </Link> */}
       </div>
      
     </div>

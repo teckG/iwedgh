@@ -21,8 +21,8 @@ function Footer() {
             <h4 className="font-semibold text-lg mb-4">Contact Us</h4>
             <ul className="text-sm text-gray-400">
               <li>Email: <a href="mailto:support@iwedgh.com" className="text-blue-400 hover:underline">support@iwedgh.com</a></li>
-              <li>Phone: +233 123 456 789</li>
-              <li>WhatsApp: +233 987 654 321</li>
+              <li>Phone: +233 539 929 080</li>
+              <li>WhatsApp: +233 539 929 080</li>
               <li>Support: <a href="https://iwedgh.com/support" className="text-blue-400 hover:underline">iwedgh.com/support</a></li>
             </ul>
           </div>

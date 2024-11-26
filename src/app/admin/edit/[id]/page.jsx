@@ -35,6 +35,7 @@ const EditVendor = ({ params }) => {
     website: "",
     socialMediaLinks: {
       instagram: "",
+      facebook: "",
       twitter: "",
       tiktok: "",
       whatsapp: "",
@@ -64,6 +65,7 @@ const EditVendor = ({ params }) => {
           website: vendorData.website,
           socialMediaLinks: {
             instagram: vendorData.socialMediaLinks.instagram,
+            facebook: vendorData.socialMediaLinks.facebook,
             twitter: vendorData.socialMediaLinks.twitter,
             tiktok: vendorData.socialMediaLinks.tiktok,
             whatsapp: vendorData.socialMediaLinks.whatsapp,
@@ -152,6 +154,7 @@ const EditVendor = ({ params }) => {
                   value={formData.businessCategory}
                   onChange={handleInputChange}
                   required
+                  readOnly
                 />
               </div>
 
@@ -212,6 +215,7 @@ const EditVendor = ({ params }) => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
+                  readOnly
                 />
               </div>
 
@@ -223,6 +227,7 @@ const EditVendor = ({ params }) => {
                   name="uploadLogo"
                   value={formData.uploadLogo}
                   onChange={handleInputChange}
+                  readOnly
                 />
               </div>
 
@@ -283,6 +288,15 @@ const EditVendor = ({ params }) => {
                       type="url"
                       name="instagram"
                       value={formData.socialMediaLinks.instagram}
+                      onChange={handleSocialMediaChange}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="facebook">Facebook</Label>
+                    <Input
+                      type="url"
+                      name="facebook"
+                      value={formData.socialMediaLinks.facebook}
                       onChange={handleSocialMediaChange}
                     />
                   </div>
