@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import axios from "axios";
-import Link from "next/link";
 
 export default function CarouselSection() {
   const [images, setImages] = useState([]);
@@ -40,7 +39,7 @@ export default function CarouselSection() {
   }, [images.length]);
 
   return (
-    <div className="relative flex-1 py-4 overflow-hidden">
+    <div className="relative flex-1 overflow-hidden">
        
       <div className="relative w-full h-[500px]"> 
         <div
@@ -53,12 +52,12 @@ export default function CarouselSection() {
                 key={index}
                 className="w-full flex-shrink-0"
               >
-                <AspectRatio ratio={16 / 9}>
+                <AspectRatio ratio={1/1}>
                   <Image
                     src={src}
                     alt={`Image ${index}`}
                     layout="fill"
-                    className="object-contain rounded-md rounded-t-none"
+                    className="object-contain rounded rounded-t-none"
                   />
                 </AspectRatio>
               </div>
@@ -68,14 +67,7 @@ export default function CarouselSection() {
           )}
           
         </div>
-        {/* <Link
-        href="/vendors"
-        className="block bg-green-600  px-6 py-3 text-center text-white font-semibold 
-        shadow-md hover:bg-yellow-500 transition-transform duration-200 transform  
-         focus:outline-none focus:ring-4 focus:ring-yellow-300 m-0"
-      >
-        Check out our vendors &rarr;
-      </Link> */}
+        
       </div>
      
     </div>

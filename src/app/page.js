@@ -12,19 +12,14 @@ export default function Home() {
   return (
     <main className="conatiner mx-auto ">
       
-      <div className="flex flex-col md:flex-row items-center justify-center  px-16 py-9 pb-24">
-       
-        <GetStarted className="flex-1" />
-          {/* Link Button */}
-     
-        <CarouselSection className="flex-1" />
+      <div className="flex flex-col md:flex-row items-center justify-center  px-16 pt-9 ">
+        <GetStarted />     
+        <CarouselSection />
       </div>
-      <hr />
       <Hero />
+      {/* <hr />
+      <CTA /> */}
       <hr />
-      <CTA />
-      <hr />
-
       <AboutMissionSection />
       <hr />
 

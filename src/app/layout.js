@@ -1,18 +1,11 @@
-"use client"
-import { Inter } from "next/font/google";
+"use client";
+
 import { useState, useEffect } from "react";
 import "./globals.css";
 import { Nav } from "@/components/ui/Nav";
 import { Toaster } from "react-hot-toast";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import Footer from "@/components/ui/Footer";
-
 
 // export const metadata = {
 //   title: "iWedGh",
@@ -43,25 +36,41 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <head>
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/images/logo.ico" />
+          <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
+          <meta
+            name="keywords"
+            content="iWedGh, Wedding Vendors, Wedding in Ghana, Wedding Planners"
+          />
+          <meta name="description" content="#1 Wedding Platform in Ghana" />
           <title>iWedGh</title>
         </head>
-        <body className="flex flex-col min-h-screen bg-gradient-to-r from-[#fdb588e8] via-[#ffc49f79] to-[#efb3003f]">
+        <body className="bg-gradient-to-r from-[#fdb588e8] via-[#ffc49f79] to-[#efb3003f] min-h-screen flex flex-col">
           <Toaster position="top-center" reverseOrder={false} />
-          <Nav />
+          <div className="flex-1 flex">
+            {/* Sidebar */}
+            <aside className="hidden md:flex flex-col w-64 bg-gray-800 text-white">
+              <Nav />
+            </aside>
 
-          {/* Show Offline Warning Banner */}
-          {!isOnline && (
-            <div className="bg-red-500 text-white text-center p-2 z-50">
-              You are currently offline. Please check your internet connection.
+            {/* Main Content */}
+            <div className="flex-1 flex flex-col">
+              {/* Top Nav for smaller screens */}
+              <header className="md:hidden bg-gray-800 text-white">
+                <Nav />
+              </header>
+
+              {/* Offline Warning */}
+              {!isOnline && (
+                <div className="bg-red-500 text-white text-center p-2">
+                  You are currently offline. Please check your internet connection.
+                </div>
+              )}
+
+              {/* Main Content */}
+              <main className="flex-1">{children}</main>
             </div>
-          )}
-
-          {/* Main content should expand to fill the available space */}
-          <main className="flex-grow">{children}</main>
-
-          {/* Footer sticks to the bottom */}
-          <Footer />
+          </div>
         </body>
       </html>
     </ClerkProvider>

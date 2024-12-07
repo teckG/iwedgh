@@ -7,7 +7,7 @@ function Footer() {
     <footer className="bg-gray-800 text-white py-8 w-full">
       <div className="container mx-auto px-4">
         {/* Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1  gap-8">
           {/* Column 1: About */}
           <div className="text-center md:text-left">
             <h4 className="font-semibold text-lg mb-4">About iWedGh</h4>
@@ -17,7 +17,7 @@ function Footer() {
           </div>
 
           {/* Column 2: Contact */}
-          <div className="text-center">
+          <div>
             <h4 className="font-semibold text-lg mb-4">Contact Us</h4>
             <ul className="text-sm text-gray-400">
               <li>Email: <a href="mailto:support@iwedgh.com" className="text-blue-400 hover:underline">support@iwedgh.com</a></li>
@@ -28,7 +28,7 @@ function Footer() {
           </div>
 
           {/* Column 3: Quick Links */}
-          <div className="text-center md:text-right">
+          <div>
             <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
             <ul className="text-sm text-gray-400">
               <li><Link href="/terms" className="hover:underline">Terms of Service</Link></li>

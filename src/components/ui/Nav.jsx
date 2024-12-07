@@ -2,12 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { SignUpButton, useUser } from "@clerk/nextjs";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
+import Footer from "@/components/ui/Footer";
+import { useUser } from "@clerk/nextjs";
 import {
   HandPlatter,
   ImagesIcon,
@@ -17,10 +13,9 @@ import {
   UserCheck,
   PencilLineIcon,
   LucideDollarSign,
-  LogInIcon,
   LogIn,
-  LucideSignpost,
-  LogOut,
+  User,
+  LucideHome,
 } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
@@ -42,73 +37,108 @@ export function Nav() {
 
   // Check if the user has the required permissions
   const hasRequiredPermissions = memberships.some((membership) =>
-    requiredPermissions.every(permission =>
+    requiredPermissions.every((permission) =>
       membership.permissions.includes(permission)
     )
   );
 
   // Navigation items
   const navItems = [
-    { href: "/", label: "iWedGh", icon: null },
-    { href: "/vendors", label: "Vendors", icon: <HandPlatter width={20} className="text-[#fe8f40]" /> },
-    { href: "/hashtag", label: "Hashtag Generator", icon: <HashIcon width={20} className="text-[#fe8f40]" /> },
-    { href: "/checklist", label: "Check List", icon: <CheckCheck width={20} className="text-[#fe8f40]" /> },
-    { href: "/budget", label: "Budget Planner", icon: <LucideDollarSign width={20} className="text-[#fe8f40]" /> },
-    { href: "/collection", label: "Collection", icon: <StarIcon width={20} className="text-[#fe8f40]" /> },
+    { href: "/", label: "iWedGh", icon: <LucideHome width={20} className="text-[#fe8f40]" /> },
+    {
+      href: "/vendors",
+      label: "Vendors",
+      icon: <HandPlatter width={20} className="text-[#fe8f40]" />,
+    },
+    {
+      href: "/hashtag",
+      label: "Hashtag Generator",
+      icon: <HashIcon width={20} className="text-[#fe8f40]" />,
+    },
+    {
+      href: "/checklist",
+      label: "Check List",
+      icon: <CheckCheck width={20} className="text-[#fe8f40]" />,
+    },
+    {
+      href: "/budget",
+      label: "Budget Planner",
+      icon: <LucideDollarSign width={20} className="text-[#fe8f40]" />,
+    },
+    {
+      href: "/collection",
+      label: "Collection",
+      icon: <StarIcon width={20} className="text-[#fe8f40]" />,
+    },
   ];
 
   const adminItems = [
-    { href: "/admin", label: "Admin Dashboard", icon: <UserCheck width={20} className="text-[#fe8f40]" /> },
-    { href: "/enlist", label: "Register Vendor", icon: <PencilLineIcon width={20} className="text-[#fe8f40]" /> },
-    { href: "/uploadimg", label: "Upload Image", icon: <ImagesIcon width={20} className="text-[#fe8f40]" /> },
+    {
+      href: "/admin",
+      label: "Admin Dashboard",
+      icon: <UserCheck width={20} className="text-[#fe8f40]" />,
+    },
+    {
+      href: "/enlist",
+      label: "Register Vendor",
+      icon: <PencilLineIcon width={20} className="text-[#fe8f40]" />,
+    },
+    {
+      href: "/uploadimg",
+      label: "Upload Image",
+      icon: <ImagesIcon width={20} className="text-[#fe8f40]" />,
+    },
   ];
 
   return (
-    <NavigationMenu className="max-w-full bg-gray-800 text-white text-sm">
-      <div className="py-3">
-        <NavigationMenuList className="flex justify-between flex-wrap gap-2 items-center">
-          {/* Render standard navigation items */}
-          {navItems.map(({ href, label, icon }, index) => (
-            <NavigationMenuItem key={index}>
-              <Link
-                href={href}
-                passHref
-                className="flex gap-2 flex-row justify-between rounded-md p-2 py-1 no-underline outline-none hover:text-[#3a3a3a] hover:bg-[#ffffff]"
-              >
-                {icon} {label}
-              </Link>
-            </NavigationMenuItem>
-          ))}
+    <nav className="flex flex-col justify-between min-h-screen p-4 bg-gray-800 text-white">
+      {/* Navigation Links */}
+      <div>
+        {navItems.map((item, idx) => (
+          <Link
+            key={idx}
+            href={item.href}
+            className="flex items-center gap-2 text-white p-2 hover:bg-gray-700 rounded"
+          >
+            {item.icon}
+            {item.label}
+          </Link>
+        ))}
 
-          {/* Render admin navigation items if user has permissions */}
-          {hasRequiredPermissions && adminItems.map(({ href, label, icon }, index) => (
-            <NavigationMenuItem key={index}>
-              <Link
-                href={href}
-                passHref
-                className="flex gap-2 flex-row justify-between rounded-md p-2 py-1 no-underline outline-none hover:text-[#3a3a3a] hover:bg-[#ffffff]"
-              >
-                {icon} {label}
-              </Link>
-            </NavigationMenuItem>
+        {/* Admin navigation items */}
+        {hasRequiredPermissions &&
+          adminItems.map((item, idx) => (
+            <Link
+              key={idx}
+              href={item.href}
+              className="flex items-center gap-2 text-white p-2 hover:bg-gray-700 rounded"
+            >
+              {item.icon}
+              {item.label}
+            </Link>
           ))}
-
-          {/* User authentication buttons */}
-          <NavigationMenuItem className="flex items-center justify-center">
-            <SignedOut className="flex justify-between">
-              <div className="flex gap-2 flex-row justify-between rounded-md p-2 py-1 no-underline outline-none hover:text-[#3a3a3a] hover:bg-[#ffffff]">
-              <LogIn  className="text-[#fe8f40]" width={20} /> <SignInButton />
-              </div>
-              <div className="flex gap-2 flex-row justify-between rounded-md p-2 py-1 no-underline outline-none hover:text-[#3a3a3a] hover:bg-[#ffffff]">
-              <LogOut className="text-[#fe8f40]" width={20} /> <SignUpButton />
-              </div>
-            </SignedOut>
-            <SignedIn className="flex items-center justify-center">
-              <UserButton />
-            </SignedIn>
-          </NavigationMenuItem>
-        </NavigationMenuList>
       </div>
-    </NavigationMenu>
+      
+
+      {/* Authentication Links */}
+      <div className="flex items-center gap-4 p-2">
+        <SignedOut>
+          <div className="flex items-center gap-2">
+            <LogIn className="text-[#fe8f40]" width={20} />
+            <SignInButton />
+          </div>
+        </SignedOut>
+
+        <SignedIn>
+          <div className="flex items-center gap-2">
+            <User className="text-[#fe8f40]" width={20} />
+            <UserButton />
+          </div>
+        </SignedIn>
+      </div>
+
+      {/* Footer */}
+      <Footer />
+    </nav>
   );
 }

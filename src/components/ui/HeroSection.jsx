@@ -33,8 +33,8 @@ export default function HeroSection() {
 
   return (
     
-    <div className="flex-1 hero-text p-8 text-center md:text-left">
-      <h1 className="mb-4 text-4xl font-extrabold leading-tight text-gray-800">
+    <div className="flex-1 hero-text text-center md:text-left p-10">
+      <h1 className="mb-4 text-3xl font-extrabold leading-tight text-gray-800">
         Are you looking for{" "}
         <span id="vendorType" className="fade text-green-800">
           {currentVendorType}?
@@ -43,7 +43,7 @@ export default function HeroSection() {
       
       <p className="text-lg mb-6 text-gray-600 max-w-2xl">
         From Aisle to Altar - Discover Ghana&apos;s Best Wedding Vendors.
-        <span className="block text-gray-800 mt-2">
+        <span className="block text-gray-800 mt-2 w-4/6">
           Explore a diverse range of trusted wedding vendors to help
           you plan every detail of your big day seamlessly.
         </span>

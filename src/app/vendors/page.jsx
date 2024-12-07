@@ -34,7 +34,7 @@ export default function Vendors() {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const vendorsPerPage = 10;
+  const vendorsPerPage = 8;
 
   // Fetch vendors
   useEffect(() => {
@@ -60,7 +60,8 @@ export default function Vendors() {
     } else {
       const filtered = vendors.filter(
         (vendor) =>
-          vendor.businessCategory.toLowerCase() === selectedCategory.toLowerCase()
+          vendor.businessCategory.toLowerCase() ===
+          selectedCategory.toLowerCase()
       );
       setFilteredVendors(filtered);
     }
@@ -155,14 +156,20 @@ export default function Vendors() {
         await fetch("/api/favorites/remove", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: user.primaryEmailAddress.emailAddress, vendorId }),
+          body: JSON.stringify({
+            email: user.primaryEmailAddress.emailAddress,
+            vendorId,
+          }),
         });
         setFavorites(favorites.filter((id) => id !== vendorId));
       } else {
         await fetch("/api/favorites/add", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: user.primaryEmailAddress.emailAddress, vendorId }),
+          body: JSON.stringify({
+            email: user.primaryEmailAddress.emailAddress,
+            vendorId,
+          }),
         });
         setFavorites([...favorites, vendorId]);
       }
@@ -171,100 +178,97 @@ export default function Vendors() {
     }
   };
 
-  const getInitials = (name) => name.split(" ").map((w) => w[0]).join("");
-  
+  const getInitials = (name) =>
+    name
+      .split(" ")
+      .map((w) => w[0])
+      .join("");
 
   return (
-    <div className="flex">
+    <div className="flex pb-10">
       <div className="flex-1">
+        {/* New UI */}
 
+        <div className="container mx-auto p-4 flex flex-col md:flex-row items-center justify-between shadow-sm">
+          {/* Welcome Message */}
+          <h1 className="text-xl font-semibold text-gray-800 mb-4 md:mb-0">
+            {user?.firstName ? `Welcome, ${user.firstName}` : "Hello there"}
+          </h1>
 
-{/* New UI */}
+          {/* Vendor Count & Category Dropdown */}
+          <div className="flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-4 w-full md:w-auto">
+            <span className="text-gray-600 text-lg">
+              {filteredVendors.length} Vendors
+            </span>
 
-<div className="container mx-auto p-4 flex flex-col md:flex-row items-center justify-between shadow-sm">
-      {/* Welcome Message */}
-      <h1 className="text-xl font-semibold text-gray-800 mb-4 md:mb-0">
-        {user?.firstName ? `Welcome, ${user.firstName}` : "Hello there"}
-      </h1>
+            {/* Search Bar with Dropdown */}
+            <div className="relative w-full md:w-64" ref={dropdownRef}>
+              <input
+                type="text"
+                placeholder="Search categories..."
+                className="w-full text-gray-700 p-2 pl-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-300"
+                value={selectedCategory}
+                onChange={(e) => {
+                  setSelectedCategory(e.target.value);
+                  setDropdownVisible(true);
+                }}
+                onFocus={() => setDropdownVisible(true)} // Show dropdown on focus
+              />
 
-      {/* Vendor Count & Category Dropdown */}
-      <div className="flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-4 w-full md:w-auto">
-        <span className="text-gray-600 text-lg">
-          {filteredVendors.length} Vendors
-        </span>
+              {/* Clear button 'x' */}
+              {selectedCategory && (
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                  onClick={() => setSelectedCategory("")}
+                >
+                  <Delete />
+                </button>
+              )}
 
-        {/* Search Bar with Dropdown */}
-        <div className="relative w-full md:w-64" ref={dropdownRef}>
-  <input
-    type="text"
-    placeholder="Search categories..."
-    className="w-full text-gray-700 p-2 pl-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-300"
-    value={selectedCategory}
-    onChange={(e) => {
-      setSelectedCategory(e.target.value);
-      setDropdownVisible(true);
-    }}
-    onFocus={() => setDropdownVisible(true)} // Show dropdown on focus
-  />
-
-  {/* Clear button 'x' */}
-  {selectedCategory && (
-    <button
-      type="button"
-      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
-      onClick={() => setSelectedCategory("")}
-    >
-    <Delete />
-    </button>
-  )}
-
-  {dropdownVisible && filteredCategories.length > 0 && (
-    <div className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto z-20">
-      <ul className="py-1">
-        {filteredCategories.map((category) => (
-          <li
-            key={category}
-            className="hover:bg-gray-100 px-4 py-2 cursor-pointer"
-            onClick={() => {
-              setSelectedCategory(category);
-              setDropdownVisible(false); // Close dropdown after selection
-            }}
-          >
-            {category}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )}
-</div>
-
-      </div>
-    </div>
-
-
-
+              {dropdownVisible && filteredCategories.length > 0 && (
+                <div className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto z-20">
+                  <ul className="py-1">
+                    {filteredCategories.map((category) => (
+                      <li
+                        key={category}
+                        className="hover:bg-gray-100 px-4 py-2 cursor-pointer"
+                        onClick={() => {
+                          setSelectedCategory(category);
+                          setDropdownVisible(false); // Close dropdown after selection
+                        }}
+                      >
+                        {category}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
         {/* Main Content */}
         <div className="px-20 h-screen">
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 p-4">
-            {Array.from({ length: 10 }).map((_, index) => (
-              <div key={index} className="animate-pulse">
-                <Card className="shadow-lg bg-gray-200">
-                  <CardHeader className="flex flex-col items-center p-4">
-                    <div className="w-24 h-24 bg-gray-300 mb-4"></div>
-                    <div className="w-32 h-4 bg-gray-300 rounded mb-2"></div>
-                    <div className="w-24 h-4 bg-gray-300 rounded"></div>
-                  </CardHeader>
-                  <CardContent className="p-4">
-                    <div className="w-full h-12 bg-gray-300 rounded"></div>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 p-4">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <div key={index} className="animate-pulse">
+                  <Card className="shadow-lg bg-gray-200">
+                    <CardHeader className="flex flex-col items-center p-4">
+                      <div className="w-24 h-24 bg-gray-300 mb-4"></div>
+                      <div className="w-32 h-4 bg-gray-300 rounded mb-2"></div>
+                      <div className="w-24 h-4 bg-gray-300 rounded"></div>
+                    </CardHeader>
+                    <CardContent className="p-4">
+                      <div className="w-full h-12 bg-gray-300 rounded"></div>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 p-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
               {currentVendors.length > 0 ? (
                 currentVendors.map((vendor, index) => (
                   <div key={index} className="relative">
@@ -294,26 +298,26 @@ export default function Vendors() {
                           </CarouselContent>
 
                           {/* Next and Previous buttons */}
-                            <CarouselPrevious className="absolute top-1/2 left-2 transform-translate-y-1/2  rounded-full p-2 shadow-md " />
-                            <CarouselNext className="absolute top-1/2 right-2 transform-translate-y-1/2  rounded-full p-2 shadow-md"/>
+                          <CarouselPrevious className="absolute top-1/2 left-2 transform-translate-y-1/2  rounded-full p-2 shadow-md " />
+                          <CarouselNext className="absolute top-1/2 right-2 transform-translate-y-1/2  rounded-full p-2 shadow-md" />
                         </Carousel>
 
                         {isSignedIn && (
-        <button
-          onClick={() => toggleFavorite(vendor._id)}
-          className={`absolute top-4 right-4 p-2 rounded-full text-white transition-colors duration-200 ${
-            favorites.includes(vendor._id)
-              ? "bg-red-500 hover:bg-red-600"
-              : "bg-gray-500 hover:bg-gray-600"
-          }`}
-        >
-          {favorites.includes(vendor._id) ? (
-            <HeartPulse className="w-6 h-6" />
-          ) : (
-            <HeartIcon className="w-6 h-6" />
-          )}
-        </button>
-      )}
+                          <button
+                            onClick={() => toggleFavorite(vendor._id)}
+                            className={`absolute top-4 right-4 p-2 rounded-full text-white transition-colors duration-200 ${
+                              favorites.includes(vendor._id)
+                                ? "bg-red-500 hover:bg-red-600"
+                                : "bg-gray-500 hover:bg-gray-600"
+                            }`}
+                          >
+                            {favorites.includes(vendor._id) ? (
+                              <HeartPulse className="w-6 h-6" />
+                            ) : (
+                              <HeartIcon className="w-6 h-6" />
+                            )}
+                          </button>
+                        )}
                       </div>
 
                       {/* Details Section */}
@@ -321,32 +325,34 @@ export default function Vendors() {
                         <div className="flex items-center mb-4">
                           {vendor.uploadLogo ? (
                             <Link
-                            href={`/vendors/${vendor._id}`}
-                            className="hover:text-gray-400"
-                          >
-                            <Image
-                              src={vendor.uploadLogo}
-                              alt={vendor.businessName}
-                              width={50}
-                              height={50}
-                              className="rounded-full object-cover w-12 h-12"
-                            />
+                              href={`/vendors/${vendor._id}`}
+                              className="hover:text-gray-400"
+                            >
+                              <Image
+                                src={vendor.uploadLogo}
+                                alt={vendor.businessName}
+                                width={50}
+                                height={50}
+                                className="rounded-full object-cover w-12 h-12"
+                              />
                             </Link>
                           ) : (
                             <div className="flex justify-center items-center w-12 h-12 bg-gray-300 rounded-full text-2xl font-bold text-white">
-                             <Link
-                            href={`/vendors/${vendor._id}`}
-                            className="hover:text-gray-400 "
-                          >{getInitials(vendor.businessName)} </Link> 
+                              <Link
+                                href={`/vendors/${vendor._id}`}
+                                className="hover:text-gray-400 "
+                              >
+                                {getInitials(vendor.businessName)}{" "}
+                              </Link>
                             </div>
                           )}
                           <div className="ml-4">
                             <CardTitle>
-                              <Link
-                                href={`/vendors/${vendor._id}`}
-                              >
+                              <Link href={`/vendors/${vendor._id}`}>
                                 {" "}
-                                <span className="text-xl">{vendor.businessName}{" "}</span>
+                                <span className="text-xl">
+                                  {vendor.businessName}{" "}
+                                </span>
                               </Link>
                             </CardTitle>
 
@@ -406,13 +412,3 @@ export default function Vendors() {
     </div>
   );
 }
-
-function getInitials(name) {
-  return name
-    .split(" ")
-    .map((word) => word.charAt(0))
-    .join("");
-}
-
-
-
