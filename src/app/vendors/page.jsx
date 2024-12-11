@@ -10,7 +10,7 @@ import {
   CardTitle,
   CardDescription,
   CardHeader,
-} from "@/components/ui/card"; // Adjust the import path
+} from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   Carousel,

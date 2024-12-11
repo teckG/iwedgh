@@ -42,8 +42,8 @@ export default function RootLayout({ children }) {
             name="keywords"
             content="iWedGh, Wedding Vendors, Wedding in Ghana, Wedding Planners"
           />
-          <meta name="description" content="#1 Wedding Platform in Ghana" />
-          <title>iWedGh</title>
+<meta name="description" content="Discover iWedGh, Ghana's #1 wedding platform, connecting you with top-rated vendors, stunning hashtag generators, wedding budget planners, checklists, and more. Plan your dream wedding effortlessly with our user-friendly tools, expert tips, and comprehensive directory of photographers, venues, caterers, and decorators. Your perfect wedding starts here!" />
+<title>iWedGh - Ghana&apos;s #1 Wedding Platform</title>
         </head>
         <body className="bg-gradient-to-r from-[#fdb588e8] via-[#ffc49f79] to-[#efb3003f] min-h-screen flex flex-col">
           <Toaster position="top-center" reverseOrder={false} />
