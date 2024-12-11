@@ -5,12 +5,6 @@ import "./globals.css";
 import { Nav } from "@/components/ui/Nav";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
-import Footer from "@/components/ui/Footer";
-
-// export const metadata = {
-//   title: "iWedGh",
-//   description: "#1 Wedding Platform in Ghana",
-// };
 
 export default function RootLayout({ children }) {
   const [isOnline, setIsOnline] = useState(true);
@@ -37,13 +31,52 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <head>
           <link rel="icon" href="/images/logo.ico" />
+
           <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
           <meta
             name="keywords"
             content="iWedGh, Wedding Vendors, Wedding in Ghana, Wedding Planners"
           />
-<meta name="description" content="Discover iWedGh, Ghana's #1 wedding platform, connecting you with top-rated vendors, stunning hashtag generators, wedding budget planners, checklists, and more. Plan your dream wedding effortlessly with our user-friendly tools, expert tips, and comprehensive directory of photographers, venues, caterers, and decorators. Your perfect wedding starts here!" />
-<title>iWedGh - Ghana&apos;s #1 Wedding Platform</title>
+          <meta
+            name="description"
+            content="Discover iWedGh, Ghana's #1 wedding platform! Find top-rated vendors, stunning hashtags, budget planners, expert tips, and more to plan your dream wedding effortlessly."
+          />
+          <meta
+            name="google-site-verification"
+            content="xVRblMQYiDLHukCvTk8cDTbsaWk5_8ntGOZ34gAgUq4"
+          />
+          <meta
+            property="og:title"
+            content="iWedGh - Plan Your Dream Wedding"
+          />
+          <meta
+            property="og:description"
+            content="Discover Ghana's top wedding vendors, stunning hashtag generators, budget planners, expert tips, and more to plan your dream wedding effortlessly."
+          />
+          <meta
+            property="og:image"
+            content="https://www.iwedgh.com/assets/og-image.jpg"
+          />
+          <meta property="og:url" content="https://www.iwedgh.com/" />
+          <meta property="og:type" content="website" />
+          <meta property="og:locale" content="en_GH" />
+          <meta property="og:site_name" content="iWedGh" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta
+            name="twitter:title"
+            content="iWedGh - Plan Your Dream Wedding"
+          />
+          <meta
+            name="twitter:description"
+            content="Discover Ghana's top wedding vendors, stunning hashtag generators, budget planners, expert tips, and more to plan your dream wedding effortlessly."
+          />
+          <meta
+            name="twitter:image"
+            content="https://www.iwedgh.com/assets/twitter-card.jpg"
+          />
+
+          <link rel="canonical" href="https://www.iwedgh.com/" />
+          <title>iWedGh - Ghana&apos;s #1 Wedding Platform</title>
         </head>
         <body className="bg-gradient-to-r from-[#fdb588e8] via-[#ffc49f79] to-[#efb3003f] min-h-screen flex flex-col">
           <Toaster position="top-center" reverseOrder={false} />
@@ -63,7 +96,8 @@ export default function RootLayout({ children }) {
               {/* Offline Warning */}
               {!isOnline && (
                 <div className="bg-red-500 text-white text-center p-2">
-                  You are currently offline. Please check your internet connection.
+                  You are currently offline. Please check your internet
+                  connection.
                 </div>
               )}
 

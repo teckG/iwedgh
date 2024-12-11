@@ -12,9 +12,9 @@ import Link from "next/link";
 export default function FAQSection() {
   return (
     <div className="p-8 px-24">
-      <h1 className="mb-4 text-2xl  text-green-600 font-extrabold leading-tight">
+      <h2 className="mb-4 text-2xl  text-green-600 font-extrabold leading-tight">
         Frequently Asked Questions
-      </h1>
+      </h2>
       <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-4 gap-16">
         <div className="col flex-1">
           <Accordion type="single" collapsible>
