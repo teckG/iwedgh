@@ -45,7 +45,6 @@ export async function GET(req) {
 
     return NextResponse.json({ favorites: categorizedVendors }, { status: 200 });
   } catch (error) {
-    console.error("Error fetching favorites:", error);
     return NextResponse.json({ error: "Error fetching favorites" }, { status: 500 });
   }
 }

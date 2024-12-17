@@ -8,7 +8,6 @@ mongoose.set('strictPopulate', false);
 // Handle GET request
 export async function GET(req, { params }) {
   const { id } = params; // Get dynamic id
-  console.log('GET API triggered: active', id);
 
   await db_connection();
 
@@ -31,7 +30,7 @@ export async function PUT(req, { params }) {
     // Extract email and comment from the request body
     const { email, comment } = body;
   
-    console.log('Received data:', email, comment);
+  
 
     // Check if email and comment are provided
     if (!email || !comment) {
@@ -60,7 +59,6 @@ export async function PUT(req, { params }) {
     }
   
   } catch (error) {
-    console.error("Error updating replies:", error.message);
     return new Response(JSON.stringify({ message: "Internal Server Error", error: error.message }), { status: 500 });
   }
 
@@ -70,7 +68,6 @@ export async function PUT(req, { params }) {
 export async function POST(req, { params }) {
   const { id } = params; // Get dynamic id
   const body = await req.json();
-  console.log('POST API triggered: active', id, " ", body);
   return new Response(JSON.stringify({ message: 'POST request received', id }), { status: 200 });
 
 }
@@ -78,7 +75,6 @@ export async function POST(req, { params }) {
 // Handle DELETE request (if needed)
 export async function DELETE(req, { params }) {
   const { id } = params;
-  console.log('DELETE API triggered: active', id);
 
   await db_connection();
 

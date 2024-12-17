@@ -53,7 +53,6 @@ export async function POST(request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error creating vendor:", error);
     return NextResponse.json(
       { success: false, message: "Failed to create vendor", error: error.message },
       { status: 500 }

@@ -15,9 +15,7 @@ export async function GET(req, { params }) {
 
     if (vendor) {
       return new Response(JSON.stringify(vendor), { status: 200 });
-    } else {
-      return new Response('Vendor not found', { status: 404 });
-    }
+    } 
   } catch (error) {
     return new Response('Internal Server Error', { status: 500 });
   } 

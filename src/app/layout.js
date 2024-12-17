@@ -5,15 +5,18 @@ import "./globals.css";
 import { Nav } from "@/components/ui/Nav";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
+import Head from "next/head";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
   const [isOnline, setIsOnline] = useState(true);
+  const pathname = usePathname();
+  const [canonicalUrl, setCanonicalUrl] = useState("");
 
   useEffect(() => {
     // Set initial online/offline state
     setIsOnline(navigator.onLine);
 
-    // Add event listeners for online and offline status
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
@@ -26,13 +29,18 @@ export default function RootLayout({ children }) {
     };
   }, []);
 
+  // Update canonical URL dynamically
+  useEffect(() => {
+    setCanonicalUrl(`https://www.iwedgh.com${pathname}`);
+  }, [pathname]);
+
   return (
     <ClerkProvider>
       <html lang="en">
         <head>
-          <link rel="icon" href="/images/logo.ico" />
-
-          <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>iWedGh - Ghana&apos;s #1 Wedding Platform</title>
+        <link rel="icon" href="/logo.png" type="image/png" />
+        <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
           <meta
             name="keywords"
             content="iWedGh, Wedding Vendors, Wedding in Ghana, Wedding Planners"
@@ -45,10 +53,7 @@ export default function RootLayout({ children }) {
             name="google-site-verification"
             content="xVRblMQYiDLHukCvTk8cDTbsaWk5_8ntGOZ34gAgUq4"
           />
-          <meta
-            property="og:title"
-            content="iWedGh - Plan Your Dream Wedding"
-          />
+          <meta property="og:title" content="iWedGh - Plan Your Dream Wedding" />
           <meta
             property="og:description"
             content="Discover Ghana's top wedding vendors, stunning hashtag generators, budget planners, expert tips, and more to plan your dream wedding effortlessly."
@@ -75,10 +80,12 @@ export default function RootLayout({ children }) {
             content="https://www.iwedgh.com/assets/twitter-card.jpg"
           />
 
-          <link rel="canonical" href="https://www.iwedgh.com/" />
-          <title>iWedGh - Ghana&apos;s #1 Wedding Platform</title>
         </head>
-        <body className="bg-gradient-to-r from-[#fdb588e8] via-[#ffc49f79] to-[#efb3003f] min-h-screen flex flex-col">
+        <Head>
+          {/* Set dynamic canonical URL */}
+          {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        </Head>
+        <body className="flex flex-col bg-gradient-to-r from-[#fdb588e8] via-[#ffc49f79] to-[#efb3003f]">
           <Toaster position="top-center" reverseOrder={false} />
           <div className="flex-1 flex">
             {/* Sidebar */}
@@ -96,8 +103,7 @@ export default function RootLayout({ children }) {
               {/* Offline Warning */}
               {!isOnline && (
                 <div className="bg-red-500 text-white text-center p-2">
-                  You are currently offline. Please check your internet
-                  connection.
+                  You are currently offline. Please check your internet connection.
                 </div>
               )}
 

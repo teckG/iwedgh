@@ -44,7 +44,6 @@ export default function VendorDetailPage({ params }) {
   const [rating, setRating] = useState(0); // State to track the selected rating
   const [comment, setComment] = useState("");
   const [vendorId, setvendorId] = useState(id);
-  const [replyComment, setReplyComment] = useState(""); // New state for reply
   const [replyingTo, setReplyingTo] = useState(null); // Track which review is being replied to
   const [error, setError] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -196,19 +195,88 @@ const handleInputChange = (e) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width={200}><rect fill="#F5A47E" stroke="#F5A47E" strokeWidth="4" strokeLinejoin="round" width="30" height="30" x="85" y="85" rx="0" ry="0"><animate attributeName="rx" calcMode="spline" dur="1.7" values="15;15;5;15;15" keySplines=".5 0 .5 1;.8 0 1 .2;0 .8 .2 1;.5 0 .5 1" repeatCount="indefinite"></animate><animate attributeName="ry" calcMode="spline" dur="1.7" values="15;15;10;15;15" keySplines=".5 0 .5 1;.8 0 1 .2;0 .8 .2 1;.5 0 .5 1" repeatCount="indefinite"></animate><animate attributeName="height" calcMode="spline" dur="1.7" values="30;30;1;30;30" keySplines=".5 0 .5 1;.8 0 1 .2;0 .8 .2 1;.5 0 .5 1" repeatCount="indefinite"></animate><animate attributeName="y" calcMode="spline" dur="1.7" values="40;170;40;" keySplines=".6 0 1 .4;0 .8 .2 1" repeatCount="indefinite"></animate></rect></svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 200 200"
+          width={200}
+        >
+          <rect
+            fill="#F5A47E"
+            stroke="#F5A47E"
+            strokeWidth="4"
+            strokeLinejoin="round"
+            width="30"
+            height="30"
+            x="85"
+            y="85"
+            rx="0"
+            ry="0"
+          >
+            <animate
+              attributeName="rx"
+              calcMode="spline"
+              dur="1.7"
+              values="15;15;5;15;15"
+              keySplines=".5 0 .5 1;.8 0 1 .2;0 .8 .2 1;.5 0 .5 1"
+              repeatCount="indefinite"
+            ></animate>
+            <animate
+              attributeName="ry"
+              calcMode="spline"
+              dur="1.7"
+              values="15;15;10;15;15"
+              keySplines=".5 0 .5 1;.8 0 1 .2;0 .8 .2 1;.5 0 .5 1"
+              repeatCount="indefinite"
+            ></animate>
+            <animate
+              attributeName="height"
+              calcMode="spline"
+              dur="1.7"
+              values="30;30;1;30;30"
+              keySplines=".5 0 .5 1;.8 0 1 .2;0 .8 .2 1;.5 0 .5 1"
+              repeatCount="indefinite"
+            ></animate>
+            <animate
+              attributeName="y"
+              calcMode="spline"
+              dur="1.7"
+              values="40;170;40;"
+              keySplines=".6 0 1 .4;0 .8 .2 1"
+              repeatCount="indefinite"
+            ></animate>
+          </rect>
+        </svg>
       </div>
     );
   }
   
-
-  if (!vendor) {
-    return <div className="text-center">Vendor not found</div>;
+  if (!vendor && !loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r text-gray-800">
+        <div className="text-center p-6 rounded-sm ">
+          <h1 className="text-2xl md:text-3xl font-bold text-red-500 mb-4">
+            Oops! Vendor Not Found
+          </h1>
+          <p className="text-gray-600 text-lg">
+            It seems like the vendor you&apos;re looking for doesn&apos;t exist or has
+            been moved.
+          </p>
+          <div className="mt-6">
+            <button
+              className="bg-[#fe8f40] text-white px-6 py-2 rounded-lg shadow-md hover:bg-red-500 transition-colors"
+              onClick={() => (window.location.href = "/vendors")}
+            >
+              Go Back Home
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <Card className="max-w-4xl p-10 rounded-none">
+      <Card className="max-w-4xl p-10 rounded-none bg-transparent shadow-none border-none ">
         <div>
           <Carousel>
             <CarouselContent>
@@ -238,27 +306,27 @@ const handleInputChange = (e) => {
 
         <CardHeader className="bg-white p-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              {vendor.uploadLogo ? (
-                <Image
-                  src={vendor.uploadLogo}
-                  alt={vendor.businessName}
-                  width={50}
-                  height={50}
-                  className="rounded-full object-cover w-16 h-16"
-                />
-              ) : (
-                <div className="flex justify-center items-center w-16 h-16 bg-gray-300 rounded-full text-2xl font-bold text-white">
-                  {getInitials(vendor.businessName)}
-                </div>
-              )}
-              <CardTitle className="flex flex-col ml-2">
-                <span>{vendor.businessName}</span>
-                <span className="text-sm">
-                  {vendor.businessCategory} 📍 {vendor.address}
-                </span>
-              </CardTitle>
-            </div>
+          <div className="flex items-center">
+  {vendor.uploadLogo ? (
+    <Image
+      src={vendor.uploadLogo}
+      alt={vendor.businessName}
+      width={50}
+      height={50}
+      className="rounded-full object-cover w-16 h-16 cursor-zoom-in" // Magnifying glass effect
+    />
+  ) : (
+    <div className="flex justify-center items-center w-16 h-16 bg-gray-300 rounded-full text-2xl font-bold text-white">
+      {getInitials(vendor.businessName)}
+    </div>
+  )}
+  <CardTitle className="flex flex-col ml-2">
+    <span>{vendor.businessName}</span>
+    <span className="text-sm">
+      {vendor.businessCategory} 📍 {vendor.address}
+    </span>
+  </CardTitle>
+</div>
             <div className="flex space-x-4">
   {Object.entries(vendor.socialMediaLinks)
     .filter(([platform, link]) => link) // Filter out empty links

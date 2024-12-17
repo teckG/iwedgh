@@ -21,7 +21,6 @@ export async function POST(req) {
 
     return NextResponse.json({ success: true, favorites: client.favorites }, { status: 200 });
   } catch (error) {
-    console.error("Error removing favorite:", error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

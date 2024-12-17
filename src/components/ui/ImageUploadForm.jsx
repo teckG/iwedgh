@@ -19,7 +19,6 @@ function ImageUploadForm() {
   });
 
   const handleFormSubmit = (data) => {
-    console.log(data);
   };
 
   return (

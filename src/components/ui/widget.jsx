@@ -3,7 +3,6 @@ import { Cloudinary } from 'cloudinary-core';
 import Image from 'next/image';
 
 export default function CloudinaryWidget({ onUpload }) {
-  const cloudinary = new Cloudinary({ cloud_name: 'dl2k5jq2r' });
   const [imageUrl, setImageUrl] = useState(null);
 
   const openWidget = () => {
@@ -26,7 +25,6 @@ export default function CloudinaryWidget({ onUpload }) {
     <div>
       <button onClick={openWidget}>Upload Image</button>
       {imageUrl && <Image src={imageUrl} alt="Uploaded Image" width="100" />}
-      
     </div>
   );
 }

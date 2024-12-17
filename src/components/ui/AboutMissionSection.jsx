@@ -3,28 +3,22 @@ import React from "react";
 
 export default function AboutMissionSection() {
   return (
-    <div className="py-24 px-24 flex flex-col md:flex-row items-center md:items-start md:space-x-4 gap-16">
-      <div className="col flex-1">
-        <h2 className="scroll-m-20 mb-4 text-2xl text-green-600 font-extrabold leading-tight">
-          About us
+    <div className="py-24 px-6 md:px-24 flex flex-col md:flex-row items-center md:items-start gap-16 md:gap-12 ">
+      <div className="flex-1">
+        <h2 className="text-3xl font-extrabold text-[#fe8f40]  leading-tight mb-4">
+          About Us
         </h2>
-        <p className="leading-7 [&:not(:first-child)]:mt-6">
-        iWedGh is a platform that helps couples manage their wedding plans effortlessly. From budget planning to vendor management, we provide everything you need.
+        <p className="leading-7 text-lg">
+          iWedGh is more than just a wedding planning platform; it&apos;s your personal wedding assistant. We help couples navigate the journey to their perfect day with tools for budget tracking, vendor management, and more. Whether you&apos;re planning a small, intimate ceremony or a grand celebration, we have the resources you need to make every step of your wedding planning process seamless and enjoyable.
         </p>
       </div>
 
-      <div className="col flex-1">
-        <h2 className="scroll-m-20 mb-4 text-2xl  text-green-600 font-extrabold leading-tight">
-          Mission
+      <div className="flex-1">
+        <h2 className="text-3xl font-extrabold text-[#fe8f40]  leading-tight mb-4">
+          Our Mission
         </h2>
-        <p className="leading-7 [&:not(:first-child)]:mt-6">
-          Once upon a time, in a far-off land, there was a very lazy king who
-          spent all day lounging on his throne. One day, his advisors came to
-          him with a problem: the kingdom was running out of money. Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Aliquam aperiam neque
-          quibusdam perspiciatis cupiditate minima impedit consequatur harum
-          dolorem! Beatae cumque itaque similique corporis praesentium fuga
-          officia quidem delectus minus.
+        <p className="leading-7 text-lg">
+          At iWedGh, our mission is to empower couples to plan their weddings with ease and confidence. We strive to simplify the wedding planning process by providing a comprehensive platform that brings together everything you need — from budgeting to finding trusted vendors. Our goal is to ensure that every couple has a stress-free journey towards the wedding of their dreams, so they can focus on what truly matters — celebrating love and creating unforgettable memories.
         </p>
       </div>
     </div>

@@ -29,7 +29,6 @@ const handler = async (req, res) => {
 
     res.status(200).json({ message: "User signed in and stored successfully", user: dbUser });
   } catch (error) {
-    console.error("Error handling sign-in:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

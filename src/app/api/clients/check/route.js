@@ -17,7 +17,6 @@ export async function POST(req) {
       return NextResponse.json({ exists: false }, { status: 200 });
     }
   } catch (error) {
-    console.error("Error checking client existence:", error);
     return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
   }
 }

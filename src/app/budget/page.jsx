@@ -83,7 +83,7 @@ export default function BudgetPlanner() {
   const { grandTotal, subtotals } = calculateTotals();
 
   return (
-    <div className="container mx-auto py-10 bg-[#ffffff]">
+    <div className="container mx-auto py-10">
       <Toaster />
       <h1 className="text-3xl font-bold mb-6 ">Budget Planner</h1>
 
@@ -116,7 +116,7 @@ export default function BudgetPlanner() {
       </div>
 
       {/* Budget Report */}
-      <div id="budget-report" className="p-6 rounded-lg">
+      <div id="budget-report" className="p-6 rounded-lg ">
         <h2 className="font-bold text-lg mb-4">Budget Summary</h2>
         <Table className="min-w-full">
           <thead>

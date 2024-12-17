@@ -7,8 +7,6 @@ import { useUser } from "@clerk/nextjs";
 import {
   Card,
   CardContent,
-  CardTitle,
-  CardDescription,
   CardHeader,
 } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -20,6 +18,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Delete, HeartIcon, HeartPulse } from "lucide-react";
+
+
+
 
 export default function Vendors() {
   const [vendors, setVendors] = useState([]);
@@ -185,41 +186,40 @@ export default function Vendors() {
       .join("");
 
   return (
-    <div className="flex pb-10">
-      <div className="flex-1">
-        {/* New UI */}
-
-        <div className="container mx-auto p-4 flex flex-col md:flex-row items-center justify-between shadow-sm">
-          {/* Welcome Message */}
-          <h1 className="text-xl font-semibold text-gray-800 mb-4 md:mb-0">
+    <div className="flex ">
+      <div className="flex-1 ">
+        {/* bg-gradient-to-r from-green-500 via-blue-600 to-purple-700 */}
+        <div className=" w-full bg-gray-800 text-white shadow-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 z-50">
+        {/* Welcome Message */}
+          <h1 className="text-2xl font-bold">
             {user?.firstName ? `Welcome, ${user.firstName}` : "Hello there"}
           </h1>
 
           {/* Vendor Count & Category Dropdown */}
-          <div className="flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-4 w-full md:w-auto">
-            <span className="text-gray-600 text-lg">
+          <div className="flex flex-col md:flex-row items-center gap-6 w-full md:w-auto">
+            <span className="text-lg font-medium">
               {filteredVendors.length} Vendors
             </span>
 
             {/* Search Bar with Dropdown */}
-            <div className="relative w-full md:w-64" ref={dropdownRef}>
+            <div className="relative w-full md:w-80" ref={dropdownRef}>
               <input
                 type="text"
                 placeholder="Search categories..."
-                className="w-full text-gray-700 p-2 pl-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-300"
+                className="w-full p-3 rounded-lg border-none text-gray-900 bg-white placeholder-gray-500 shadow-sm focus:ring-4 focus:ring-blue-300 focus:outline-none"
                 value={selectedCategory}
                 onChange={(e) => {
                   setSelectedCategory(e.target.value);
                   setDropdownVisible(true);
                 }}
-                onFocus={() => setDropdownVisible(true)} // Show dropdown on focus
+                onFocus={() => setDropdownVisible(true)}
               />
 
               {/* Clear button 'x' */}
               {selectedCategory && (
                 <button
                   type="button"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
                   onClick={() => setSelectedCategory("")}
                 >
                   <Delete />
@@ -227,15 +227,15 @@ export default function Vendors() {
               )}
 
               {dropdownVisible && filteredCategories.length > 0 && (
-                <div className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto z-20">
-                  <ul className="py-1">
+                <div className="absolute left-0 top-full mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto z-20">
+                  <ul className="py-2">
                     {filteredCategories.map((category) => (
                       <li
                         key={category}
-                        className="hover:bg-gray-100 px-4 py-2 cursor-pointer"
+                        className="hover:bg-gray-200 px-4 py-2 cursor-pointer text-gray-700"
                         onClick={() => {
                           setSelectedCategory(category);
-                          setDropdownVisible(false); // Close dropdown after selection
+                          setDropdownVisible(false);
                         }}
                       >
                         {category}
@@ -249,9 +249,9 @@ export default function Vendors() {
         </div>
 
         {/* Main Content */}
-        <div className="px-20 h-screen">
+        <div className="px-20 lg:p-10">
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 p-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
               {Array.from({ length: 10 }).map((_, index) => (
                 <div key={index} className="animate-pulse">
                   <Card className="shadow-lg bg-gray-200">
@@ -268,109 +268,88 @@ export default function Vendors() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
-              {currentVendors.length > 0 ? (
-                currentVendors.map((vendor, index) => (
-                  <div key={index} className="relative">
-                    <div className="">
-                      {/* Image Carousel Section */}
-                      <div className="relative w-full">
-                        <Carousel>
-                          <CarouselContent>
-                            {vendor.uploadImagesOfService?.map(
-                              (link, index) => (
-                                <CarouselItem
-                                  key={index}
-                                  className="shadow-md rounded-t-lg"
-                                >
-                                  <AspectRatio ratio={16 / 9}>
-                                    <Image
-                                      src={link}
-                                      alt={vendor.businessName}
-                                      width={400}
-                                      height={225}
-                                      className="object-cover w-full h-full rounded-t-lg"
-                                    />
-                                  </AspectRatio>
-                                </CarouselItem>
-                              )
-                            )}
-                          </CarouselContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+  {currentVendors.length > 0 ? (
+    currentVendors.map((vendor, index) => (
+      <div
+        key={index}
+        className="relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+      >
+        {/* Image Carousel Section */}
+        <div className="relative">
+          <Carousel>
+            <CarouselContent>
+              {vendor.uploadImagesOfService?.map((link, index) => (
+                <CarouselItem key={index}>
+                  <AspectRatio ratio={16 / 9}>
+                    <Image
+                      src={link}
+                      alt={vendor.businessName}
+                      width={400}
+                      height={225}
+                      className="object-cover w-full h-full"
+                    />
+                  </AspectRatio>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
 
-                          {/* Next and Previous buttons */}
-                          <CarouselPrevious className="absolute top-1/2 left-2 transform-translate-y-1/2  rounded-full p-2 shadow-md " />
-                          <CarouselNext className="absolute top-1/2 right-2 transform-translate-y-1/2  rounded-full p-2 shadow-md" />
-                        </Carousel>
+            {/* Next and Previous Buttons */}
+            <CarouselPrevious className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full shadow-md hover:bg-gray-200" />
+            <CarouselNext className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full shadow-md hover:bg-gray-200" />
+          </Carousel>
 
-                        {isSignedIn && (
-                          <button
-                            onClick={() => toggleFavorite(vendor._id)}
-                            className={`absolute top-4 right-4 p-2 rounded-full text-white transition-colors duration-200 ${
-                              favorites.includes(vendor._id)
-                                ? "bg-red-500 hover:bg-red-600"
-                                : "bg-gray-500 hover:bg-gray-600"
-                            }`}
-                          >
-                            {favorites.includes(vendor._id) ? (
-                              <HeartPulse className="w-6 h-6" />
-                            ) : (
-                              <HeartIcon className="w-6 h-6" />
-                            )}
-                          </button>
-                        )}
-                      </div>
-
-                      {/* Details Section */}
-                      <CardContent className="p-4  rounded-b-lg bg-white">
-                        <div className="flex items-center mb-4">
-                          {vendor.uploadLogo ? (
-                            <Link
-                              href={`/vendors/${vendor._id}`}
-                              className="hover:text-gray-400"
-                            >
-                              <Image
-                                src={vendor.uploadLogo}
-                                alt={vendor.businessName}
-                                width={50}
-                                height={50}
-                                className="rounded-full object-cover w-12 h-12"
-                              />
-                            </Link>
-                          ) : (
-                            <div className="flex justify-center items-center w-12 h-12 bg-gray-300 rounded-full text-2xl font-bold text-white">
-                              <Link
-                                href={`/vendors/${vendor._id}`}
-                                className="hover:text-gray-400 "
-                              >
-                                {getInitials(vendor.businessName)}{" "}
-                              </Link>
-                            </div>
-                          )}
-                          <div className="ml-4">
-                            <CardTitle>
-                              <Link href={`/vendors/${vendor._id}`}>
-                                {" "}
-                                <span className="text-xl">
-                                  {vendor.businessName}{" "}
-                                </span>
-                              </Link>
-                            </CardTitle>
-
-                            <CardDescription>
-                              {vendor.businessCategory} 📍 {vendor.city}
-                            </CardDescription>
-                          </div>
-                        </div>
-                        <p className="text-sm">
-                          {vendor.briefIntroduction.length > 70
-                            ? `${vendor.briefIntroduction.substring(0, 80)}...`
-                            : vendor.briefIntroduction}
-                        </p>
-                      </CardContent>
-                    </div>
-                  </div>
-                ))
+          {/* Favorite Button */}
+          {isSignedIn && (
+            <button
+              onClick={() => toggleFavorite(vendor._id)}
+              className={`absolute top-4 right-4 p-2 rounded-full text-white transition-colors duration-200 ${
+                favorites.includes(vendor._id)
+                  ? "bg-red-500 hover:bg-red-600"
+                  : "bg-gray-500 hover:bg-gray-600"
+              }`}
+            >
+              {favorites.includes(vendor._id) ? (
+                <HeartPulse className="w-6 h-6" />
               ) : (
+                <HeartIcon className="w-6 h-6" />
+              )}
+            </button>
+          )}
+        </div>
+
+        {/* Business Details Section */}
+        <div className="p-4 flex items-center gap-4">
+          {/* Business Logo */}
+          {vendor.uploadLogo ? (
+            <Image
+              src={vendor.uploadLogo}
+              alt={vendor.businessName}
+              width={50}
+              height={50}
+              className="w-14 h-14 rounded-full object-cover shadow-md"
+            />
+          ) : (
+            <div className="flex justify-center items-center w-14 h-14 bg-gray-300 rounded-full text-lg font-bold text-gray-700">
+              {getInitials(vendor.businessName)}
+            </div>
+          )}
+
+          {/* Business Name and Address */}
+          <div>
+            <h3 className="text-lg font-bold text-gray-900">
+              <Link href={`/vendors/${vendor._id}`} className="hover:underline">
+                {vendor.businessName}
+              </Link>
+            </h3>
+            <p className="text-sm text-gray-500">
+              📍 {vendor.city}, {vendor.businessCategory}
+            </p>
+          </div>
+        </div>
+      </div>
+    ))
+  )  : (
                 <p>No vendors found</p>
               )}
             </div>

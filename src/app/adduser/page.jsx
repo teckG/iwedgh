@@ -27,14 +27,12 @@ function AddUser() {
             });
             if(res.ok){
                 // router.push('/');
-                console.log('Data saved');
 
             }else{
                 throw new Error("Failed to create user");
             }
 
         } catch (error) {
-            console.log(error)
         }
 
     }

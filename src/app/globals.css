@@ -5,7 +5,7 @@
 
 /* Optional custom styles */
 hr {
-  @apply border-t-2 border-gray-300;
+  @apply border-t-2 border-green-300;
 }
 
 .container {
@@ -116,11 +116,22 @@ hr {
   flex-shrink: 0;
 }
 
-
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
 
 body {
-  margin: 0;
   font-family: Inter, sans-serif;
+  min-height: 100vh; 
+}
+
+main {
+  overflow-y: auto; /* Add vertical scrolling if content overflows */
+  max-width: 100vw; /* Ensure main content doesn’t exceed viewport width */
 }
 
 .flex {
@@ -129,14 +140,6 @@ body {
 
 .min-h-screen {
   min-height: 100vh;
-}
-
-.bg-gray-800 {
-  background-color: #2d3748;
-}
-
-.text-white {
-  color: #ffffff;
 }
 
 .hidden {
@@ -169,4 +172,18 @@ body {
 
 .hover\\:bg-gray-700:hover {
   background-color: #4a5568;
+}
+
+
+/* Visually Hidden Utility */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* Prevent text wrapping */
+  border: 0;
 }

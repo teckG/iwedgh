@@ -85,7 +85,6 @@ export async function POST(req) {
 
         return NextResponse.json(reviewsWithVendorDetails, { status: 200 });
     } catch (error) {
-        console.error("Error fetching reviews:", error);
         return NextResponse.json({ error: "Error fetching reviews" }, { status: 500 });
     }
 }

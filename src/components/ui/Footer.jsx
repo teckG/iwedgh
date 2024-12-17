@@ -8,15 +8,6 @@ function Footer() {
       <div className="container mx-auto px-4">
         {/* Footer Content */}
         <div className="grid grid-cols-1  gap-8">
-          {/* Column 1: About */}
-          <div className="text-center md:text-left">
-            <h4 className="font-semibold text-lg mb-4">About iWedGh</h4>
-            <p className="text-sm text-gray-400">
-              iWedGh is a platform that helps couples manage their wedding plans effortlessly. From budget planning to vendor management, we provide everything you need.
-            </p>
-          </div>
-
-          {/* Column 2: Contact */}
           <div>
             <h4 className="font-semibold text-lg mb-4">Contact Us</h4>
             <ul className="text-sm text-gray-400">
