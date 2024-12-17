@@ -63,7 +63,7 @@ export default function CarouselSection() {
   };
 
   return (
-    <div className="relative flex-1 overflow-hidden rounded-lg">
+    <div className="relative flex-1 overflow-hidden bg-slate-100">
       {/* Spinner while loading */}
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center">
@@ -111,16 +111,19 @@ export default function CarouselSection() {
       </div>
 
       {/* Navigation Dots */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3  p-4 rounded-full shadow-lg border border-gray-200">
         {images.map((_, index) => (
           <button
-            key={index}
-            className={`w-3 h-3 rounded-full  ${
-              currentIndex === index ? "bg-green-500" : "bg-gray-300"
-            }`}
-            onClick={() => goToSlide(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          ></button>
+          key={index}
+          className={`w-4 h-4 rounded-full transition-all duration-300 ease-in-out ${
+            currentIndex === index
+              ? "bg-[#ffffff] ring-2 ring-green-700"
+              : "bg-[#fe8f40]  hover:opacity-100"
+          }`}
+          onClick={() => goToSlide(index)}
+          aria-label={`Go to slide ${index + 1}`}
+        />
+        
         ))}
       </div>
 

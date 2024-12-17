@@ -10,7 +10,7 @@ function Footer() {
         <div className="grid grid-cols-1  gap-8">
           <div>
             <h4 className="font-semibold text-lg mb-4">Contact Us</h4>
-            <ul className="text-sm text-gray-400">
+            <ul className="text-sm text-white">
               <li>Email: <a href="mailto:support@iwedgh.com" className="text-blue-400 hover:underline">support@iwedgh.com</a></li>
               <li>Phone: +233 539 929 080</li>
               <li>WhatsApp: +233 539 929 080</li>
@@ -21,7 +21,7 @@ function Footer() {
           {/* Column 3: Quick Links */}
           <div>
             <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
-            <ul className="text-sm text-gray-400">
+            <ul className="text-sm text-white">
               <li><Link href="/terms" className="hover:underline">Terms of Service</Link></li>
               <li><Link href="/privacy" className="hover:underline">Privacy Policy</Link></li>
               <li><Link href="/faq" className="hover:underline">FAQ</Link></li>

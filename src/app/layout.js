@@ -85,18 +85,18 @@ export default function RootLayout({ children }) {
           {/* Set dynamic canonical URL */}
           {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         </Head>
-        <body className="flex flex-col bg-gradient-to-r from-[#fdb588e8] via-[#ffc49f79] to-[#efb3003f]">
+        <body className="flex flex-col bg-gradient-to-r from-[#ffd4b9e8] to-slate-100">
           <Toaster position="top-center" reverseOrder={false} />
           <div className="flex-1 flex">
             {/* Sidebar */}
-            <aside className="hidden md:flex flex-col w-64 bg-gray-800 text-white">
+            <aside className="hidden lg:flex flex-col w-64 bg-gray-800 text-white">
               <Nav />
             </aside>
 
             {/* Main Content */}
             <div className="flex-1 flex flex-col">
               {/* Top Nav for smaller screens */}
-              <header className="md:hidden bg-gray-800 text-white">
+              <header className="sm:flex  lg:hidden bg-gray-800 text-white">
                 <Nav />
               </header>
 

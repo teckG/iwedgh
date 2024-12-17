@@ -38,9 +38,10 @@ export default function HeroSection() {
   }, [index, vendorTypes]);
 
   return (
-    <div className="flex flex-col items-center text-center md:items-start md:text-left py-10 px-6 md:px-24">
+    <div className="flex flex-col items-center text-center md:items-start md:text-left p-10">
+      
       <div className="flex flex-col items-center md:items-start gap-3">
-        <h1 className="text-2xl md:text-3xl font-extrabold leading-tight">
+        <h1 className="text-2xl md:text-3xl font-extrabold leading-tight ">
           Are you looking for
         </h1>
         <h2
@@ -59,24 +60,25 @@ export default function HeroSection() {
         </span>
       </p>
       
-      <div className="mt-8 flex gap-4">
-        {/* Register Button */}
-        <Link
-          href="https://forms.gle/Q5MNwfZbwDNQUQBX6"
-          target="_blank"
-          className="px-6 py-3 bg-green-600 text-white text-lg font-semibold rounded-md shadow-lg hover:bg-green-700 transition"
-        >
-          Register
-        </Link>
+      <div className="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
+  {/* Register Button */}
+  <Link
+    href="https://forms.gle/Q5MNwfZbwDNQUQBX6"
+    target="_blank"
+    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-[#fe8f40] to-[#ff9e66] text-white text-lg font-bold rounded-lg shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-1000 ease-in-out transform animate-bounce"
+  >
+    Register
+  </Link>
 
-        {/* Visit Vendors Page Button */}
-        <Link
-          href="/vendors"
-          className="px-6 py-3 bg-blue-600 text-white text-lg font-semibold rounded-md shadow-lg hover:bg-blue-700 transition"
-        >
-          Visit Vendors Page
-        </Link>
-      </div>
+  {/* Visit Vendors Page Button */}
+  <Link
+    href="/vendors"
+    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-[#fe8f40] to-[#ff9e66] text-white text-lg font-bold rounded-lg shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-1000 ease-in-out transform animate-bounce"
+  >
+    Visit Vendors Page
+  </Link>
+</div>
+
     </div>
   );
 }

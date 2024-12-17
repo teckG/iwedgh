@@ -202,11 +202,11 @@ export default function Vendors() {
             </span>
 
             {/* Search Bar with Dropdown */}
-            <div className="relative w-full md:w-80" ref={dropdownRef}>
+            <div className="relative" ref={dropdownRef}>
               <input
                 type="text"
                 placeholder="Search categories..."
-                className="w-full p-3 rounded-lg border-none text-gray-900 bg-white placeholder-gray-500 shadow-sm focus:ring-4 focus:ring-blue-300 focus:outline-none"
+                className="p-3 rounded-lg border-none text-gray-900 bg-white placeholder-gray-500 shadow-sm focus:ring-4 focus:ring-blue-300 focus:outline-none "
                 value={selectedCategory}
                 onChange={(e) => {
                   setSelectedCategory(e.target.value);

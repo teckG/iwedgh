@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
-import { DialogContent, DialogTitle } from "./dialog";
+import { DialogTitle } from "./dialog";
 
 
 export function Nav() {
@@ -63,7 +63,7 @@ export function Nav() {
       <Sheet aria-describedby="Navigation bar">
   {/* Trigger button */}
   <SheetTrigger className="lg:hidden p-2 fixed top-4 left-4 z-50 bg-gray-800 text-white rounded-md shadow-md">
-    <Menu size={24} />
+    <Menu size={24} aria-label={`Trigger Navbar`} />
   </SheetTrigger>
 
   {/* Content of the Sheet */}
@@ -104,7 +104,6 @@ export function Nav() {
         ))}
     </div>
 
-    {/* Footer Section */}
     <div className="mt-auto p-4">
       <SignedOut>
         <div className="flex items-center gap-2">
@@ -124,69 +123,62 @@ export function Nav() {
 
 
       {/* Desktop Sidebar */}
-      <nav
-        className={`hidden lg:block fixed top-0 left-0 h-full bg-gray-800 text-white shadow-lg transition-all duration-300 ${
-          isCollapsed ? "w-20" : "w-64"
-        }`}
-      >
-        {/* Toggle Button */}
-        <button
-          className="absolute top-4 right-4 lg:hidden text-white"
-          onClick={() => setIsCollapsed(!isCollapsed)}
+{/* Desktop Sidebar */}
+<nav
+  className={`fixed top-0 left-0 h-full bg-gray-800 text-white shadow-lg transition-all duration-300 lg:block hidden ${
+    isCollapsed ? "lg:w-20" : "lg:w-64"
+  }`}
+>
+  <div className="flex flex-col justify-between h-full py-10">
+    <div>
+      {navItems.map((item, idx) => (
+        <Link
+          key={idx}
+          href={item.href}
+          className="group flex items-center gap-2 p-4 hover:bg-gray-700 rounded"
         >
-          {isCollapsed ? <Menu size={24} /> : "X"}
-        </button>
+          <div className="text-[#fe8f40]">{item.icon}</div>
+          {!isCollapsed && (
+            <span className="group-hover:text-[#fe8f40]">{item.label}</span>
+          )}
+        </Link>
+      ))}
+      {hasRequiredPermissions &&
+        adminItems.map((item, idx) => (
+          <Link
+            key={idx}
+            href={item.href}
+            className="group flex items-center gap-2 p-4 hover:bg-gray-700 rounded"
+          >
+            <div className="text-[#fe8f40]">{item.icon}</div>
+            {!isCollapsed && (
+              <span className="group-hover:text-[#fe8f40]">{item.label}</span>
+            )}
+          </Link>
+        ))}
+    </div>
 
-        <div className="flex flex-col justify-between h-full py-10">
-          <div>
-            {navItems.map((item, idx) => (
-              <Link
-                key={idx}
-                href={item.href}
-                className="group flex items-center gap-2 p-4 hover:bg-gray-700 rounded"
-              >
-                <div className="text-[#fe8f40]">{item.icon}</div>
-                {!isCollapsed && (
-                  <span className="group-hover:text-[#fe8f40]">{item.label}</span>
-                )}
-              </Link>
-            ))}
-            {hasRequiredPermissions &&
-              adminItems.map((item, idx) => (
-                <Link
-                  key={idx}
-                  href={item.href}
-                  className="group flex items-center gap-2 p-4 hover:bg-gray-700 rounded"
-                >
-                  <div className="text-[#fe8f40]">{item.icon}</div>
-                  {!isCollapsed && (
-                    <span className="group-hover:text-[#fe8f40]">
-                      {item.label}
-                    </span>
-                  )}
-                </Link>
-              ))}
-          </div>
-
-          {/* Authentication Links */}
-          <div className="p-4">
-            <SignedOut>
-              <div className="flex items-center gap-2">
-                <LogIn className="text-[#fe8f40]" width={20} />
-                <SignInButton />
-              </div>
-            </SignedOut>
-            <SignedIn>
-              <div className="flex items-center gap-2">
-                <User className="text-[#fe8f40]" width={20} />
-                <UserButton />
-              </div>
-            </SignedIn>
-          </div>
-
-          {!isCollapsed && <Footer />}
+    {/* Authentication Links */}
+    <div className="p-4">
+      <SignedOut>
+        <div className="flex items-center gap-2">
+          <LogIn className="text-[#fe8f40]" width={20} />
+          <SignInButton />
         </div>
-      </nav>
+      </SignedOut>
+      <SignedIn>
+        <div className="flex items-center gap-2">
+          <User className="text-[#fe8f40]" width={20} />
+          <UserButton />
+        </div>
+      </SignedIn>
+    </div>
+
+    {!isCollapsed && <Footer />}
+  </div>
+</nav>
+
+
     </div>
   );
 }
