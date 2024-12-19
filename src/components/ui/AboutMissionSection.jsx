@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import Image from "next/image"; // Assuming you're using Next.js and have images locally or from an external source.
-import Link from "next/link";
+import Image from "next/image"; 
 
 export default function AboutMissionSection() {
   return (
@@ -11,11 +10,11 @@ export default function AboutMissionSection() {
       <div className="flex-1 space-y-6 md:space-y-8 max-w-xl">
       <div className="relative h-64 md:h-96 rounded-xl overflow-hidden">
           <Image
-            src="/admin.png" // Replace with your own image path or URL
+            src="/admin.png" 
             alt="Our Mission"
-            layout="fill"
-            objectFit="cover"
-            className="absolute inset-0"
+            width={800} 
+                height={600} 
+                className="absolute inset-0 object-cover"
           />
         </div>
         <h2 className="text-4xl font-extrabold text-[#fe8f40] leading-tight mb-4">
@@ -37,11 +36,11 @@ export default function AboutMissionSection() {
         </p>
         <div className="relative h-64 md:h-96 rounded-xl overflow-hidden">
           <Image
-            src="/flyer.jpg" // Replace with your own image path or URL
+            src="/flyer.jpg" 
             alt="Our Mission"
-            layout="fill"
-            objectFit="cover"
-            className="absolute inset-0"
+            width={800} 
+                height={600} 
+                className="absolute inset-0 object-cover"
           />
         </div>
       </div>

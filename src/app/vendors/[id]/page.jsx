@@ -1,24 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/components/ui/dialog";
-import {
+  EyeIcon,
   Facebook,
   Instagram,
   MessageCircle,
@@ -26,13 +11,11 @@ import {
   SendHorizonal,
   Twitter,
 } from "lucide-react";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import axios from "axios";
 import tiktok from "../../../images/tiktok.svg";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
-import { Badge } from "@/components/ui/badge";
 import toast from "react-hot-toast";
 
 export default function VendorDetailPage({ params }) {
@@ -47,6 +30,7 @@ export default function VendorDetailPage({ params }) {
   const [replyingTo, setReplyingTo] = useState(null); // Track which review is being replied to
   const [error, setError] = useState(null);
   const [reviews, setReviews] = useState([]);
+  
 
   const { user } = useUser(); // Get user data from Clerk
   const [formData, setFormData] = useState({
@@ -275,111 +259,113 @@ const handleInputChange = (e) => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <Card className="max-w-4xl p-10 rounded-none bg-transparent shadow-none border-none ">
-        <div>
-          <Carousel>
-            <CarouselContent>
-              {vendor.uploadImagesOfService?.map((value, index) => (
-                <CarouselItem
-                  key={index}
-                  className="cursor-pointer"
-                  onClick={() => handleImageClick(value)}
-                >
-                  <AspectRatio ratio={16 / 9}>
-                    <Image
-                      src={value}
-                      alt={`Service Image ${index}`}
-                      width={500}
-                      height={400}
-                      className="object-cover w-full h-auto"
-                    />
-                  </AspectRatio>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            {/* Next and Previous buttons */}
-            <CarouselPrevious className="absolute top-1/2 left-2 transform-translate-y-1/2  rounded-full p-2 shadow-md " />
-            <CarouselNext className="absolute top-1/2 right-2 transform-translate-y-1/2  rounded-full p-2 shadow-md" />
-          </Carousel>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="max-w-4xl w-full bg-white  rounded-md overflow-hidden p-5">
+        {/* Image Gallery */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4">
+          {vendor.uploadImagesOfService?.map((image, index) => (
+            <div
+              key={index}
+              className="relative cursor-pointer group"
+              onClick={() => handleImageClick(image)}
+            >
+              <Image
+                src={image}
+                alt={`Service Image ${index}`}
+                width={500} 
+                height={600} 
+                className="w-full h-40 object-cover rounded-md"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="text-white text-sm"><EyeIcon /></span>
+              </div>
+            </div>
+          ))}
+          
         </div>
 
-        <CardHeader className="bg-white p-4">
-          <div className="flex justify-between items-center">
-          <div className="flex items-center">
-  {vendor.uploadLogo ? (
-    <Image
-      src={vendor.uploadLogo}
-      alt={vendor.businessName}
-      width={50}
-      height={50}
-      className="rounded-full object-cover w-16 h-16 cursor-zoom-in" // Magnifying glass effect
-    />
-  ) : (
-    <div className="flex justify-center items-center w-16 h-16 bg-gray-300 rounded-full text-2xl font-bold text-white">
-      {getInitials(vendor.businessName)}
+
+      {/* Vendor Info */}
+<div className="p-4 bg-white rounded-lg">
+  {/* Vendor Header */}
+  <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
+    {/* Vendor Logo */}
+    {vendor.uploadLogo ? (
+      <Image
+        src={vendor.uploadLogo}
+        alt={vendor.businessName}
+        width={500}
+        height={600}
+        className="w-20 h-20 rounded-full object-cover"
+      />
+    ) : (
+      <div className="flex justify-center items-center w-20 h-20 bg-gray-300 rounded-full text-2xl font-bold text-white">
+        {getInitials(vendor.businessName)}
+      </div>
+    )}
+    {/* Vendor Info */}
+    <div className="text-center md:text-left">
+      <h2 className="text-2xl font-bold text-gray-800">{vendor.businessName}</h2>
+      <p className="text-gray-600 text-sm mt-1">
+        {vendor.businessCategory} 📍 {vendor.address}
+      </p>
     </div>
-  )}
-  <CardTitle className="flex flex-col ml-2">
-    <span>{vendor.businessName}</span>
-    <span className="text-sm">
-      {vendor.businessCategory} 📍 {vendor.address}
-    </span>
-  </CardTitle>
-</div>
-            <div className="flex space-x-4">
-  {Object.entries(vendor.socialMediaLinks)
-    .filter(([platform, link]) => link) // Filter out empty links
-    .map(([platform, link], index) => {
-      const formattedLink = formatURL(link);
-      const iconProps = {
-        instagram: <Instagram className="w-6 h-6" />, // Icon size
-        twitter: <Twitter className="w-6 h-6" />,
-        facebook: <Facebook className="w-6 h-6" />,
-        tiktok: (
-          <Image
-            src={tiktok}
-            width={24}
-            height={24}
-            alt="tiktok logo"
-            className="w-6 h-6" // Apply consistent size
-          />
-        ),
-        whatsapp: <MessageCircle className="w-6 h-6" />,
-      };
+  </div>
 
-      return (
-        <Link
-          key={index}
-          href={formattedLink}
-          className="text-gray-600 hover:text-gray-800 transition-colors"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <button className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 hover:scale-110 transition-transform duration-200">
-            {iconProps[platform]}
-          </button>
-        </Link>
-      );
-    })}
+  {/* Social Links and Call Button */}
+  <div className="flex flex-wrap items-center justify-center md:justify-start space-x-4 space-y-2 mt-4">
+    {Object.entries(vendor.socialMediaLinks)
+      .filter(([_, link]) => link) // Filter out empty links
+      .map(([platform, link], index) => {
+        const formattedLink = formatURL(link);
+        const iconMap = {
+          instagram: <Instagram className="w-5 h-5" />,
+          twitter: <Twitter className="w-5 h-5" />,
+          facebook: <Facebook className="w-5 h-5" />,
+          tiktok: (
+            <Image
+              src={tiktok}
+              width={20}
+              height={20}
+              alt="TikTok Logo"
+              className="w-5 h-5"
+            />
+          ),
+          whatsapp: <MessageCircle className="w-5 h-5" />,
+        };
 
-  <Link
-    href={`tel:+233${vendor.activePhoneNumber.slice(1)}`}
-    className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 hover:scale-110 transition-transform duration-200"
-  >
-    <PhoneCallIcon className="w-6 h-6" /> {/* Apply icon size */}
-  </Link>
+        return (
+          <Link
+            key={index}
+            href={formattedLink}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800 transition-all shadow-md"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {iconMap[platform]}
+          </Link>
+        );
+      })}
+
+    {/* Call Button */}
+    <Link
+      href={`tel:+233${vendor.activePhoneNumber.slice(1)}`}
+      className="flex items-center justify-center w-10 h-10 rounded-full bg-green-100 text-green-600 hover:bg-green-200 hover:text-green-800 transition-all shadow-md"
+    >
+      <PhoneCallIcon className="w-5 h-5" />
+    </Link>
+  </div>
 </div>
 
 
-          </div>
 
-          <CardDescription className="pt-4 text-gray-700">
-            <p>{vendor.briefIntroduction}</p>
-          </CardDescription>
-        </CardHeader>
+        {/* Vendor Description */}
+        <div className="p-4">
+          <p className="text-gray-700">{vendor.briefIntroduction}</p>
+        </div>
 
-        <CardContent className="p-4 text-sm bg-white">
+        {/* Vendor Details */}
+        <div className="p-4 text-sm space-y-2">
           {vendor.subcategory && (
             <p>
               <span className="font-semibold">Subcategory:</span>{" "}
@@ -387,8 +373,7 @@ const handleInputChange = (e) => {
             </p>
           )}
           <p>
-            <span className="font-semibold">First Name:</span>{" "}
-            {vendor.firstName}
+            <span className="font-semibold">First Name:</span> {vendor.firstName}
           </p>
           <p>
             <span className="font-semibold">Last Name:</span> {vendor.lastName}
@@ -397,25 +382,19 @@ const handleInputChange = (e) => {
             <span className="font-semibold">Region:</span> {vendor.region}
           </p>
           {vendor.website && (
-  <p>
-    <span className="font-semibold">Website:</span>
-    <Link
-      className="text-blue-600 underline ml-2"
-      href={formatURL(vendor.website)}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {vendor.businessName}
-    </Link>
-  </p>
-)}
-
-        </CardContent>
-
-        <CardFooter className="bg-gray-50 p-4">
-          <p className="font-semibold">Email:</p>
-          <p>{vendor.email}</p>
-        </CardFooter>
+            <p>
+              <span className="font-semibold">Website:</span>{" "}
+              <a
+                href={formatURL(vendor.website)}
+                className="text-blue-600 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {vendor.businessName}
+              </a>
+            </p>
+          )}
+        </div>
 
         <div className="p-6 bg-white rounded-md">
       <hr className="mb-4" />
@@ -423,9 +402,7 @@ const handleInputChange = (e) => {
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <span>Comment as </span>
-          <Badge className="py-1 px-2">
             {user?.firstName || "Anonymous"}
-          </Badge>
         </div>
 
         {/* Rating Section */}
@@ -575,66 +552,23 @@ const handleInputChange = (e) => {
     </div>
 
         {/* Modal for image preview */}
-        <Dialog open={isModalOpen} onOpenChange={closeModal}>
-          <DialogContent>
-            <DialogTitle>{vendor.businessName}</DialogTitle>
-            {selectedImage && (
+        {isModalOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+            onClick={closeModal}
+          >
+            <div className="bg-white p-4 rounded-md">
               <Image
                 src={selectedImage}
-                alt="Selected Image"
-                width={600}
-                height={400}
-                className="object-cover"
+                alt="Selected"
+                width={500} 
+                height={600} 
+                className="max-w-full h-auto"
               />
-            )}
-          <DialogFooter>
-          <div className="flex space-x-4">
-  {Object.entries(vendor.socialMediaLinks)
-    .filter(([platform, link]) => link) // Filter out empty links
-    .map(([platform, link], index) => {
-      const formattedLink = formatURL(link);
-      const iconProps = {
-        instagram: <Instagram className="w-6 h-6" />, // Icon size
-        twitter: <Twitter className="w-6 h-6" />,
-        facebook: <Facebook className="w-6 h-6" />,
-        tiktok: (
-          <Image
-            src={tiktok}
-            width={24}
-            height={24}
-            alt="tiktok logo"
-            className="w-6 h-6" // Apply consistent size
-          />
-        ),
-        whatsapp: <MessageCircle className="w-6 h-6" />,
-      };
-
-      return (
-        <Link
-          key={index}
-          href={formattedLink}
-          className="text-gray-600 hover:text-gray-800 transition-colors"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <button className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 hover:scale-110 transition-transform duration-200">
-            {iconProps[platform]}
-          </button>
-        </Link>
-      );
-    })}
-
-  <Link
-    href={`tel:+233${vendor.activePhoneNumber.slice(1)}`}
-    className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 hover:scale-110 transition-transform duration-200"
-  >
-    <PhoneCallIcon className="w-6 h-6" /> {/* Apply icon size */}
-  </Link>
-</div>
-          </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </Card>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

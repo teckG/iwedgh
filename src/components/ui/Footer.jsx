@@ -21,10 +21,8 @@ function Footer() {
           {/* Column 3: Quick Links */}
           <div>
             <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
-            <ul className="text-sm text-white">
+            <ul className="text-sm text-white flex flex-col gap-5">
               <li><Link href="/terms" className="hover:underline">Terms of Service</Link></li>
-              <li><Link href="/privacy" className="hover:underline">Privacy Policy</Link></li>
-              <li><Link href="/faq" className="hover:underline">FAQ</Link></li>
               <li><Link href="/vendors" className="hover:underline">Vendor Directory</Link></li>
             </ul>
           </div>

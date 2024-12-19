@@ -78,37 +78,39 @@ export default function CarouselSection() {
         </div>
       )}
 
-      {/* Carousel */}
-      <div className="relative w-full h-[600px]">
-        <div
-          className={`absolute inset-0 flex transition-transform duration-500 ease-in-out ${
-            isLoading ? "opacity-0" : "opacity-100"
-          }`}
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {images.length > 0
-            ? images.map((src, index) => (
-                <div key={index} className="w-full flex-shrink-0">
-                  <AspectRatio ratio={1 / 1}>
-                    <Image
-                      src={src}
-                      alt={`Vendor image ${index + 1}`}
-                      width={800} 
-                      height={600} 
-                      className="object-cover"
-                      priority
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </AspectRatio>
-                </div>
-              ))
-            : !isLoading && (
-                <div className="w-full flex items-center justify-center text-gray-500">
-                  No images to display.
-                </div>
-              )}
-        </div>
-      </div>
+     {/* Carousel */}
+<div className="relative w-full h-[600px]">
+  <div
+    className={`absolute inset-0 flex transition-transform duration-500 ease-in-out ${
+      isLoading ? "opacity-0" : "opacity-100"
+    }`}
+    style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+  >
+    {images.length > 0
+      ? images.map((src, index) => (
+          <div key={index} className="w-full flex-shrink-0">
+            <AspectRatio ratio={1 / 1}>
+              <Image
+                src={src}
+                alt={`Vendor image ${index + 1}`}
+                width={800} 
+                height={600} 
+                className="object-cover"
+                loading={index === currentIndex ? "eager" : "lazy"} // Onscreen: eager, Offscreen: lazy
+                priority={index === currentIndex} // Only prioritize the current image
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </AspectRatio>
+          </div>
+        ))
+      : !isLoading && (
+          <div className="w-full flex items-center justify-center text-gray-500">
+            No images to display.
+          </div>
+        )}
+  </div>
+</div>
+
 
       {/* Navigation Dots */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3  p-4 rounded-full shadow-lg border border-gray-200">
